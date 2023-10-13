@@ -4,7 +4,6 @@ import Link from "next/link";
 import { env } from "@/env.mjs";
 import { allPosts } from "contentlayer/generated";
 import dayjs from "dayjs";
-
 import { formatDate } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Separator } from "@/components/ui/separator";
@@ -19,17 +18,17 @@ import { Shell } from "@/components/shells/shell";
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
   title: "Projects",
-  description: "Explore the latest news and updates from the community",
+  description: "Explore the latest projects and open-source contributions in web-space.",
 };
 
-export default function BlogPage() {
+export default function ProjectPage() {
   const posts = allPosts
     .filter((post) => post.published)
     .sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix());
 
   return (
     <Shell className="md:pb-10">
-      <PageHeader id="blog-header" aria-labelledby="blog-header-heading">
+      <PageHeader id="projects-header" aria-labelledby="projects-header-heading">
         <PageHeaderHeading>Projects</PageHeaderHeading>
         <PageHeaderDescription>
           Explore the latest projects and open-source contributions in
@@ -38,8 +37,8 @@ export default function BlogPage() {
       </PageHeader>
       <Separator className="mb-2.5" />
       <section
-        id="blog-posts"
-        aria-labelledby="blog-posts-heading"
+        id="project"
+        aria-labelledby="projects-heading"
         className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
         {posts.map((post, i) => (
