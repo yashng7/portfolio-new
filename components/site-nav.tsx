@@ -14,7 +14,7 @@ type Props = {};
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Projects", href: "/posts" },
+  { name: "Projects", href: "/projects" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
