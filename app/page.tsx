@@ -1,14 +1,17 @@
 "use client"
-import { Particles } from "@/components/particle";
+import { SparklesCore } from "@/components/ui/sparkles";
 import { motion } from 'framer-motion';
 
 export default function Home() {
   return (
     <section className="flex items-center w-full h-screen py-12 md:py-24 lg:py-32 xl:py-48">
-      <Particles
-        className="absolute inset-0 -z-10"
-        color={"#8642e3"}
-        quantity={400}
+      <SparklesCore
+        className="absolute inset-0 w-full h-full -z-10"
+        background="transparent"
+        particleColor="#8642e3"
+        minSize={0.6}
+        maxSize={1.4}
+        particleDensity={100}
       />
       <div className="container px-4 md:px-6">
         <div className="grid items-center gap-6">
