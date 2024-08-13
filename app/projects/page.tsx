@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { env } from "@/env.mjs";
-import { allPosts } from "contentlayer/generated";
+import { allProjects } from "contentlayer/generated";
 import dayjs from "dayjs";
 import { formatDate } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectPage() {
-  const posts = allPosts
-    .filter((post) => post.published)
+  const projects = allProjects
+    .filter((project) => project.published)
     .sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix());
 
   return (
@@ -41,14 +41,14 @@ export default function ProjectPage() {
         aria-labelledby="projects-heading"
         className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
       >
-        {posts.map((post, i) => (
-          <Link key={post.slug} href={post.slug}>
+        {projects.map((project, i) => (
+          <Link key={project.slug} href={project.slug}>
             <article className="flex flex-col space-y-2.5">
               <AspectRatio ratio={16 / 9}>
-                {post.image ? (
+                {project.image ? (
                   <Image
-                    src={post.image}
-                    alt={post.title}
+                    src={project.image}
+                    alt={project.title}
                     fill
                     sizes="(min-width: 1024px) 384px, (min-width: 768px) 288px, (min-width: 640px) 224px, 100vw"
                     className="object-cover transition-all duration-500 rounded-lg hover:scale-110"
@@ -69,14 +69,14 @@ export default function ProjectPage() {
                 )}
               </AspectRatio>
               <h2 className="text-xl font-semibold line-clamp-1">
-                {post.title}
+                {project.title}
               </h2>
               <p className="line-clamp-2 text-muted-foreground">
-                {post.description}
+                {project.description}
               </p>
-              {post.date ? (
+              {project.date ? (
                 <p className="text-sm text-muted-foreground">
-                  {formatDate(post.date)}
+                  {formatDate(project.date)}
                 </p>
               ) : null}
             </article>
