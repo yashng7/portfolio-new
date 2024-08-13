@@ -1,6 +1,8 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { MenuIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetClose,
@@ -9,6 +11,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { usePathname } from "next/navigation";
 
 type Props = {};
 
@@ -20,6 +23,7 @@ const navigation = [
 ];
 
 const Navbar = (props: Props) => {
+  const pathname = usePathname();
   return (
     <nav className="p-8 animate-fade-in">
       <ul className="items-center justify-center hidden gap-4 md:flex">
@@ -27,7 +31,10 @@ const Navbar = (props: Props) => {
           <Link
             key={item.href}
             href={item.href}
-            className="font-medium duration-500 text-zinc-500 dark:hover:text-zinc-300 hover:text-zinc-900"
+            className={cn(
+              "transition-colors hover:text-foreground/80 text-medium",
+              pathname === item.href ? "text-foreground" : "text-foreground/60"
+            )}
           >
             {item.name}
           </Link>
