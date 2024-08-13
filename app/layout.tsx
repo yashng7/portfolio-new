@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "yashng/portfolio",
+    default: "Yashwant Gawande",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
