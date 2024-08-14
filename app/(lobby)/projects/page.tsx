@@ -12,7 +12,7 @@ import {
 import { Shell } from "@/components/shells/shell"
 
 import { ProjectCard } from "./_components/project-card"
-import { ProjectCardCardSkeleton } from "./_components/project-card-skeleton"
+import { ProjectCardSkeleton } from "./_components/project-card-skeleton"
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -36,7 +36,7 @@ export default function ProjectsPage() {
       <section className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <React.Suspense
           fallback={Array.from({ length: 4 }).map((_, i) => (
-            <ProjectCardCardSkeleton key={i} />
+            <ProjectCardSkeleton key={i} />
           ))}
         >
           {projects.map((project, i) => (
