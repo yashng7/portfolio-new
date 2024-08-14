@@ -33,7 +33,7 @@ export function MdxPager({
     >
       {pager?.prev ? (
         <Link
-          aria-label="Previous post"
+          aria-label="Previous project"
           href={pager.prev.slug}
           className={cn(buttonVariants({ variant: "ghost" }))}
         >
@@ -43,7 +43,7 @@ export function MdxPager({
       ) : null}
       {pager?.next ? (
         <Link
-          aria-label="Next post"
+          aria-label="Next project"
           href={pager.next.slug}
           className={cn(buttonVariants({ variant: "ghost" }), "ml-auto")}
         >
