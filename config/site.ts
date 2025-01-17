@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "yashng/portfolio",
-  url: ""/*"https://portfolio-new-ruby-six.vercel.app/"*/ /*url of the site after deployment*/,
-  ogImage: "yashng.png",
+  url: "https://portfolio-new-ruby-six.vercel.app/projects/new" /*url of the site after deployment*/,
+  ogImage: "/og.png",
   description:
     "Portfolio website for yashng build with Next.js, contentlayer and shadcn/ui",
   links: {
