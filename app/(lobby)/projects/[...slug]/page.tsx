@@ -1,55 +1,55 @@
-import { notFound } from "next/navigation"
-import { allAuthors, allProjects } from "contentlayer/generated"
+import { notFound } from "next/navigation";
+import { allAuthors, allProjects } from "contentlayer/generated";
 
-import { Mdx } from "@/components/mdx/mdx-components"
+import { Mdx } from "@/components/mdx/mdx-components";
 
-import "@/styles/mdx.css"
+import "@/styles/mdx.css";
 
-import { type Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import { env } from "@/env.mjs"
-import { ChevronLeftIcon } from "@radix-ui/react-icons"
+import { type Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { env } from "@/env.mjs";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
-import { absoluteUrl, cn, formatDate } from "@/lib/utils"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { buttonVariants } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { MdxPager } from "@/components/pagers/mdx-pager"
-import { Shell } from "@/components/shells/shell"
+import { absoluteUrl, cn, formatDate } from "@/lib/utils";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { MdxPager } from "@/components/pagers/mdx-pager";
+import { Shell } from "@/components/shells/shell";
 
 interface ProjectPageProps {
   params: {
-    slug: string[]
-  }
+    slug: string[];
+  };
 }
 
 async function getProjectFromParams(params: ProjectPageProps["params"]) {
-  const slug = params?.slug?.join("/")
-  const project = allProjects.find((project) => project.slugAsParams === slug)
+  const slug = params?.slug?.join("/");
+  const project = allProjects.find((project) => project.slugAsParams === slug);
 
   if (!project) {
-    return null
+    return null;
   }
 
-  return project
+  return project;
 }
 
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const project = await getProjectFromParams(params)
+  const project = await getProjectFromParams(params);
 
   if (!project) {
-    return {}
+    return {};
   }
 
-  const url = env.NEXT_PUBLIC_APP_URL
+  const url = env.NEXT_PUBLIC_APP_URL;
 
-  const ogUrl = new URL(`${url}/api/og`)
-  ogUrl.searchParams.set("title", project.title)
-  ogUrl.searchParams.set("type", "projects")
-  ogUrl.searchParams.set("mode", "dark")
+  const ogUrl = new URL(`${url}/api/og`);
+  ogUrl.searchParams.set("title", project.title);
+  ogUrl.searchParams.set("type", "projects");
+  ogUrl.searchParams.set("mode", "dark");
 
   return {
     metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -78,27 +78,27 @@ export async function generateMetadata({
       description: project.description,
       images: [ogUrl.toString()],
     },
-  }
+  };
 }
 
 export async function generateStaticParams(): Promise<
-ProjectPageProps["params"][]
+  ProjectPageProps["params"][]
 > {
   return allProjects.map((project) => ({
     slug: project.slugAsParams.split("/"),
-  }))
+  }));
 }
 
 export default async function PostPage({ params }: ProjectPageProps) {
-  const project = await getProjectFromParams(params)
+  const project = await getProjectFromParams(params);
 
   if (!project) {
-    notFound()
+    notFound();
   }
 
   const authors = project.authors.map((author) =>
     allAuthors.find((a) => a.title === author?.replace(/\r$/, ""))
-  )
+  );
 
   return (
     <Shell as="article" variant="markdown">
@@ -152,15 +152,17 @@ export default async function PostPage({ params }: ProjectPageProps) {
         ) : null}
       </div>
       {project.image && (
-        <AspectRatio ratio={16 / 9}>
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="border rounded-md bg-muted"
-            priority
-          />
-        </AspectRatio>
+        <Link href={project.link} target="blank">
+          <AspectRatio ratio={16 / 9} className="my-5">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              className="border rounded-md bg-muted"
+              priority
+            />
+          </AspectRatio>
+        </Link>
       )}
       <Mdx code={project.body.code} />
       <Separator className="my-4" />
@@ -176,5 +178,5 @@ export default async function PostPage({ params }: ProjectPageProps) {
         <span className="sr-only">See all Projects</span>
       </Link>
     </Shell>
-  )
+  );
 }
