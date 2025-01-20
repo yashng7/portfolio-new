@@ -1,70 +1,55 @@
 "use client";
+
 import Link from "next/link";
 import React from "react";
-import { MenuIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-type Props = {};
+import { type LucideIcon, Home, FolderKanban, User, Mail } from "lucide-react";
+import { MobileNavigation } from "./mobile-nav";
 
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Projects", href: "/projects" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
+interface NavigationItem {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+const navigation: NavigationItem[] = [
+  { name: "Home", href: "/", icon: Home },
+  { name: "Projects", href: "/projects", icon: FolderKanban },
+  { name: "About", href: "/about", icon: User },
+  { name: "Contact", href: "/contact", icon: Mail },
 ];
 
-const Navbar = (props: Props) => {
-  const pathname = usePathname();
-  return (
-    <nav className="p-8 animate-fade-in">
-      <ul className="items-center justify-center hidden gap-4 md:flex">
-        {navigation.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "transition-colors hover:text-foreground/80 text-medium",
-              pathname === item.href ? "text-foreground" : "text-foreground/60"
-            )}
-          >
-            {item.name}
-          </Link>
-        ))}
-      </ul>
+interface NavbarProps {
+  className?: string;
+}
 
-      <Sheet>
-        <SheetTrigger className="block p-3 md:hidden">
-          <span className="text-2xl">
-            <MenuIcon />
-          </span>
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetDescription>
-              <div className="flex flex-col gap-2 p-8">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="font-medium"
-                  >
-                    <SheetClose>{item.name}</SheetClose>
-                  </Link>
-                ))}
-              </div>
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+const Navbar: React.FC<NavbarProps> = ({ className }) => {
+  const pathname = usePathname();
+
+  return (
+    <nav className={cn("p-4 md:p-8 animate-fade-in", className)}>
+      <div className="flex items-center justify-start md:justify-center">
+        <ul className="items-center justify-center hidden gap-4 md:flex">
+          {navigation.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className={cn(
+                  "transition-colors hover:text-foreground/80 text-medium",
+                  pathname === item.href
+                    ? "text-foreground"
+                    : "text-foreground/60"
+                )}
+              >
+                {item.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <MobileNavigation navigation={navigation} />
+      </div>
     </nav>
   );
 };

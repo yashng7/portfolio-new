@@ -14,7 +14,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, i }: ProjectCardProps) {
   return (
-    <Link key={project.slug} href={project.slug}>
+    <Link key={project.slug} href={project.slug} className="p-2 border rounded-md shadow-md">
       <span className="sr-only">{project.title}</span>
       <article className="space-y-4">
         <AspectRatio ratio={16 / 9}>

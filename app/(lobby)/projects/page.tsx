@@ -30,7 +30,7 @@ export default function ProjectsPage() {
       <PageHeader>
         <PageHeaderHeading>Projects</PageHeaderHeading>
         <PageHeaderDescription>
-        Explore the Projects That Demonstrate My Skills and Experience.        </PageHeaderDescription>
+        Explore the Projects That Demonstrate My Skills and Experience.</PageHeaderDescription>
       </PageHeader>
       <Separator className="mb-2.5" />
       <section className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
