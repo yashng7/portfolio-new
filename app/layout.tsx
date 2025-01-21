@@ -11,25 +11,18 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Yashwant Gawande",
+    default: "Yashwant Gawande - Full Stack Developer Portfolio",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "shadcn/ui",
-    "contentlayer",
-    "Portfolio",
-  ],
+  keywords: siteConfig.seoKeywords,
   authors: [
     {
-      name: "yashng7",
+      name: "YashwantGawande",
       url: "https://github.com/yashng7",
     },
   ],
-  creator: "yashng7",
+  creator: "YashwantGawande",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -73,7 +66,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon/favicon.png",
     apple: "/favicon/apple-touch-icon.png",
   },
-  manifest: `${siteConfig.url}/favicon/site.webmanifest`,
+  manifest: `${siteConfig.url}/site.webmanifest`,
 };
 
 export default function RootLayout({

@@ -1,0 +1,74 @@
+{
+  "name": "Yashwant Gawande - Full Stack Developer Portfolio",
+  "short_name": "YashwantGawande",
+  "description": "Showcasing the work of Yashwant Gawande, a Full Stack Developer specializing in modern web technologies like Next.js, React, Node.js, and TypeScript. Skilled in building scalable systems, intuitive user interfaces, and integrating databases like PostgreSQL and MongoDB. Let's craft the future of web applications together!",
+  "keywords": [
+    "Yashwant Gawande",
+    "Yashwant Gawande Full Stack Developer",
+    "Full Stack Developer Portfolio Yashwant Gawande",
+    "Yashwant Gawande React Developer",
+    "Full Stack Developer",
+    "Full Stack Web Developer",
+    "Web Developer Portfolio",
+    "Next.js Developer",
+    "React Developer",
+    "Node.js Developer",
+    "TypeScript Developer",
+    "JavaScript Developer",
+    "React.js Portfolio",
+    "Modern Web Development",
+    "Full Stack Developer in [Your Location]",
+    "Next.js Expert",
+    "React.js Expert",
+    "Node.js Expert",
+    "PostgreSQL Developer",
+    "MongoDB Developer",
+    "Tailwind CSS Developer",
+    "GraphQL Developer",
+    "REST API Development",
+    "Web Application Development",
+    "Scalable Web Systems",
+    "Full Stack Developer Portfolio for Next.js and React",
+    "Hire Full Stack Developer for Scalable Web Applications",
+    "Full Stack Developer with PostgreSQL and MongoDB expertise",
+    "JavaScript Full Stack Developer Portfolio",
+    "Experienced Full Stack Developer for modern web apps",
+    "Portfolio of Yashwant Gawande - Full Stack Developer",
+    "Expert Next.js React Developer for Hire",
+    "Building scalable systems with Next.js and Node.js",
+    "Building modern web applications using TypeScript and React"
+  ],
+  "icons": [
+    {
+      "src": "/favicon/android-chrome-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/android-chrome-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "orientation": "portrait",
+  "scope": "/"
+}
