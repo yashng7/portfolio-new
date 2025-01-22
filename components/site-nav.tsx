@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 import { type LucideIcon, Home, FolderKanban, User, Mail } from "lucide-react";
 import { MobileNavigation } from "./mobile-nav";
+import Logo from "./logo";
 
 interface NavigationItem {
   name: string;
@@ -29,15 +30,16 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
   const pathname = usePathname();
 
   return (
-    <nav className={cn("p-4 md:p-8 animate-fade-in", className)}>
-      <div className="flex items-center justify-start md:justify-center">
+    <nav className={cn("py-4 animate-fade-in", className)}>
+      <div className="container flex items-center justify-between ">
+      <Logo src="/logo.png" alt="Company Logo"/>
         <ul className="items-center justify-center hidden gap-4 md:flex">
           {navigation.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
                 className={cn(
-                  "transition-colors hover:text-foreground/80 text-medium",
+                  "transition-colors hover:text-foreground/80 text-medium ",
                   pathname === item.href
                     ? "text-foreground"
                     : "text-foreground/60"

@@ -54,6 +54,10 @@ export const Projects = defineDocumentType(() => ({
       type: "string",
       required: true,
     },
+    github: {
+      type: "string",
+      required: true,
+    },
     authors: {
       // Reference types are not embedded.
       // Until this is fixed, we can use a simple list.

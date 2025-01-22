@@ -33,7 +33,9 @@ const Footer = (props: Props) => {
           </Link>
           .
         </p>
-        <ThemeToggle />
+        <div className="hidden md:flex">
+          <ThemeToggle />
+        </div>
       </div>
     </footer>
   );

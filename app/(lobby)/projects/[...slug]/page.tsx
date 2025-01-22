@@ -17,6 +17,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { MdxPager } from "@/components/pagers/mdx-pager";
 import { Shell } from "@/components/shells/shell";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 interface ProjectPageProps {
   params: {
@@ -152,20 +153,26 @@ export default async function PostPage({ params }: ProjectPageProps) {
         ) : null}
       </div>
       {project.image && (
-        <Link href={project.link} target="blank">
-          <AspectRatio ratio={16 / 9} className="my-5">
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="border rounded-md bg-muted"
-              priority
-            />
-          </AspectRatio>
-        </Link>
+        <AspectRatio ratio={16 / 9} className="my-5">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="border rounded-md bg-muted"
+            priority
+          />
+        </AspectRatio>
       )}
+      <div className="flex items-center justify-end gap-5 mb-5">
+        <Link href={project.link} target="blank">
+          <InteractiveHoverButton>Visit Site</InteractiveHoverButton>
+        </Link>
+        <Link href={project.github} target="blank">
+          <InteractiveHoverButton>Source Code</InteractiveHoverButton>
+        </Link>
+      </div>
       <Mdx code={project.body.code} />
-      <Separator className="my-4" />
+      <Separator className="my-5" />
       <MdxPager currentItem={project} allItems={allProjects} />
       <Link
         href="/projects"
