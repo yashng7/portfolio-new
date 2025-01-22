@@ -3,7 +3,7 @@ export const siteConfig = {
   url: "https://www.yashwantgawande.com" /*url of the site after deployment*/,
   ogImage: "/og.png",
   description:
-    "Showcasing the work of Yashwant Gawande, a Full Stack Developer specializing in modern web technologies like Next.js, React, Node.js, and TypeScript. Skilled in building scalable systems, intuitive user interfaces, and integrating databases like PostgreSQL and MongoDB. Let's craft the future of web applications together!",
+    "Yashwant Gawande, Full Stack Developer skilled in Next.js, React, Node.js, and TypeScript. Expertise in building scalable systems, intuitive UI/UX, cloud services (AWS, Docker), and modern databases like PostgreSQL and MongoDB.",
   seoKeywords: [
     "Yashwant Gawande",
     "Yashwant Gawande Full Stack Developer",
