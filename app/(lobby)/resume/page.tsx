@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Github } from "lucide-react"
 import Link from "next/link"
+import { Shell } from "@/components/shells/shell"
 
 export default function ResumePage() {
   const handleDownload = () => {
@@ -21,6 +22,7 @@ export default function ResumePage() {
   }
 
   return (
+    <Shell className="md:pb-10">
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container max-w-4xl px-4 py-8 mx-auto">
         {/* Header */}
@@ -418,5 +420,6 @@ export default function ResumePage() {
         </div>
       </div>
     </div>
+    </Shell>
   )
 }
