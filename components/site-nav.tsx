@@ -5,7 +5,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-import { type LucideIcon, Home, FolderKanban, User, Mail } from "lucide-react";
+import { type LucideIcon, Home, FolderKanban, User, Mail, File } from "lucide-react";
 import { MobileNavigation } from "./mobile-nav";
 import Logo from "./logo";
 
@@ -20,6 +20,7 @@ const navigation: NavigationItem[] = [
   { name: "Projects", href: "/projects", icon: FolderKanban },
   { name: "About", href: "/about", icon: User },
   { name: "Contact", href: "/contact", icon: Mail },
+  { name: "Resume", href: "/resume", icon: File },
 ];
 
 interface NavbarProps {
