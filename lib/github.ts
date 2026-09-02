@@ -205,6 +205,7 @@ export async function getGithubActivity(): Promise<GithubActivityData> {
         query: GITHUB_GRAPHQL_QUERY,
         variables: { username },
       }),
+      signal: AbortSignal.timeout(5000),
       next: { revalidate: 3600 },
     });
 

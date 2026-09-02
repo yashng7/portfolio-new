@@ -10,6 +10,7 @@ import { Analytics } from "@/components/analytics";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: "Yashwant Gawande - Full Stack Developer Portfolio",
     template: `%s | ${siteConfig.name}`,

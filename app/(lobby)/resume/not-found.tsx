@@ -6,9 +6,9 @@ export default function ResumeNotFound() {
     <Shell variant="centered" className="max-w-md">
       <ErrorCard
         title="Resume not found"
-        description="The resume you are looking for does not exist"
-        retryLink="/resume"
-        retryLinkText="Go to resume"
+        description="The resume you are looking for is currently unavailable"
+        retryLink="/"
+        retryLinkText="Back to Home"
       />
     </Shell>
   )
