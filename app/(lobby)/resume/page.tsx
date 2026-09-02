@@ -7,9 +7,11 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Github } from "lucide-react"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import { Shell } from "@/components/shells/shell"
 
 export default function ResumePage() {
+  notFound()
   const handleDownload = () => {
     // Replace with your actual PDF URL
     const pdfUrl = "/resume.pdf"

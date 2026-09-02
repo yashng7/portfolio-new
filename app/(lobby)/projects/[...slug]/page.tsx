@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { allAuthors, allProjects } from "contentlayer/generated";
+import { getAllAuthors, getAllProjects, getProjectBySlug } from "@/lib/content";
 
 import { Mdx } from "@/components/mdx/mdx-components";
 
@@ -26,8 +26,8 @@ interface ProjectPageProps {
 }
 
 async function getProjectFromParams(params: ProjectPageProps["params"]) {
-  const slug = params?.slug?.join("/");
-  const project = allProjects.find((project) => project.slugAsParams === slug);
+  const slug = params?.slug?.join("/") ?? "";
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return null;
@@ -85,6 +85,7 @@ export async function generateMetadata({
 export async function generateStaticParams(): Promise<
   ProjectPageProps["params"][]
 > {
+  const allProjects = await getAllProjects();
   return allProjects.map((project) => ({
     slug: project.slugAsParams.split("/"),
   }));
@@ -97,8 +98,11 @@ export default async function PostPage({ params }: ProjectPageProps) {
     notFound();
   }
 
+  const allProjects = await getAllProjects();
+  const allAuthors = await getAllAuthors();
+
   const authors = project.authors.map((author) =>
-    allAuthors.find((a) => a.title === author?.replace(/\r$/, ""))
+    allAuthors.find((a) => a.title.toLowerCase() === author?.trim().toLowerCase())
   );
 
   return (
@@ -171,7 +175,7 @@ export default async function PostPage({ params }: ProjectPageProps) {
           <InteractiveHoverButton>Source Code</InteractiveHoverButton>
         </Link>
       </div>
-      <Mdx code={project.body.code} />
+      <Mdx source={project.content} />
       <Separator className="my-5" />
       <MdxPager currentItem={project} allItems={allProjects} />
       <Link

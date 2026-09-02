@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { allPages } from "contentlayer/generated";
+import { getAllPages, getPageBySlug } from "@/lib/content";
 
 import "@/styles/mdx.css";
 
@@ -13,7 +13,6 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header";
-import { MdxPager } from "@/components/pagers/mdx-pager";
 import { Shell } from "@/components/shells/shell";
 import { env } from "@/env.mjs";
 
@@ -23,15 +22,9 @@ interface PageProps {
   };
 }
 
-/// eslint-disable-next-line @typescript-eslint/require-await
 async function getPageFromParams(params: PageProps["params"]) {
   const slug = params?.slug?.join("/") ?? "";
-  const page = allPages.find((page) => page.slugAsParams === slug);
-
-  if (!page) {
-    null;
-  }
-
+  const page = await getPageBySlug(slug);
   return page;
 }
 
@@ -77,9 +70,9 @@ export async function generateMetadata({
   };
 }
 
-/// eslint-disable-next-line @typescript-eslint/require-await
 export async function generateStaticParams(): Promise<PageProps["params"][]> {
-  return allPages.map((page) => ({
+  const pages = await getAllPages();
+  return pages.map((page) => ({
     slug: page.slugAsParams.split("/"),
   }));
 }
@@ -91,30 +84,16 @@ export default async function PagePage({ params }: PageProps) {
     notFound();
   }
 
-  // Remove the /pages prefix from the slug
-  const formattedPage = {
-    ...page,
-    slug: page.slug.replace(/^\/pages/, ""),
-  };
-
-  const formattedPages = allPages.map((page) => ({
-    ...page,
-    slug: page.slug.replace(/^\/pages/, ""),
-  }));
-
   return (
     <Shell as="article" variant="markdown">
-      {/* <MdxPager
-        currentItem={formattedPage}
-        allItems={formattedPages}
-        className="my-4"
-      /> */}
       <PageHeader>
         <PageHeaderHeading>{page.title}</PageHeaderHeading>
-        <PageHeaderDescription>{page.description}</PageHeaderDescription>
+        {page.description ? (
+          <PageHeaderDescription>{page.description}</PageHeaderDescription>
+        ) : null}
       </PageHeader>
       <Separator className="my-4" />
-      <Mdx code={page.body.code} />
+      <Mdx source={page.content} />
     </Shell>
   );
 }

@@ -10,7 +10,7 @@ Welcome to my personal portfolio website, crafted with modern web technologies t
 
 - **[Next.js](https://nextjs.org/):** A powerful React framework for building fast and scalable web applications.
 - **[React](https://reactjs.org/):** The library for creating interactive user interfaces.
-- **[Contentlayer](https://www.contentlayer.dev/):** Managing content as code for a seamless developer experience.
+- **[next-mdx-remote](https://github.com/hashicorp/next-mdx-remote):** Lightweight, server-side MDX rendering for dynamic projects and pages.
 - **[Tailwind CSS](https://tailwindcss.com/):** Utility-first CSS for custom, responsive designs.
 
 ---
@@ -19,7 +19,7 @@ Welcome to my personal portfolio website, crafted with modern web technologies t
 
 - 🖥️ **Responsive Design:** Optimized for desktop, tablet, and mobile devices.
 - ⚡ **Blazing Fast:** Leveraging Next.js for server-side rendering and static site generation.
-- 📝 **Content Management:** Contentlayer powers the dynamic sections of the website.
+- 📝 **Content Management:** Lightweight native MDX engine powers dynamic projects and pages.
 - 🎨 **Customizable UI:** Styled with Tailwind CSS for a clean and modern look.
 - 🌍 **SEO Optimized:** Metadata, Open Graph tags, and a fast loading time for better rankings.
 - 🔗 **Social Links:** Connect with me on LinkedIn, GitHub, and more.

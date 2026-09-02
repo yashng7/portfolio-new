@@ -1,5 +1,9 @@
 import Image from "next/image"
-import { useMDXComponent } from "next-contentlayer/hooks"
+import { MDXRemote } from "next-mdx-remote/rsc"
+import rehypePrettyCode from "rehype-pretty-code"
+import rehypeSlug from "rehype-slug"
+import remarkGfm from "remark-gfm"
+import { visit } from "unist-util-visit"
 
 import { cn } from "@/lib/utils"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -118,17 +122,68 @@ const components = {
   Callout,
 }
 
-interface MdxProps {
-  code: string
+const mdxOptions = {
+  remarkPlugins: [remarkGfm],
+  rehypePlugins: [
+    rehypeSlug,
+    () => (tree: any) => {
+      visit(tree, (node: any) => {
+        if (node?.type === "element" && node?.tagName === "pre") {
+          const [codeEl] = node.children;
+          if (codeEl?.tagName !== "code") return;
+          node.raw = codeEl.children?.[0]?.value;
+        }
+      });
+    },
+    [
+      rehypePrettyCode,
+      {
+        theme: { dark: "one-dark-pro", light: "github-light" },
+        onVisitLine(node: any) {
+          if (node.children.length === 0) {
+            node.children = [{ type: "text", value: " " }];
+          }
+        },
+        onVisitHighlightedLine(node: any) {
+          node.properties.className.push("line--highlighted");
+        },
+        onVisitHighlightedWord(node: any) {
+          node.properties.className = ["word--highlighted"];
+        },
+      },
+    ],
+    () => (tree: any) => {
+      visit(tree, (node: any) => {
+        if (node?.type === "element" && node?.tagName === "div") {
+          if (!("data-rehype-pretty-code-fragment" in node.properties))
+            return;
+
+          for (const child of node.children) {
+            if (child.tagName === "pre") {
+              child.properties["raw"] = node.raw;
+            }
+          }
+        }
+      });
+    },
+  ],
 }
 
-export function Mdx({ code }: MdxProps) {
-  const Component = useMDXComponent(code)
+interface MdxProps {
+  source?: string
+  code?: string
+}
+
+export function Mdx({ source, code }: MdxProps) {
+  const content = source ?? code ?? ""
 
   return (
     <div className="prose mdx prose-slate dark:prose-invert max-w-none">
-      <Component components={components} />
+      <MDXRemote
+        source={content}
+        components={components}
+        options={{ mdxOptions: mdxOptions as any }}
+      />
     </div>
   )
 }
-

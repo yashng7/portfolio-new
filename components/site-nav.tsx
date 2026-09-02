@@ -20,7 +20,7 @@ const navigation: NavigationItem[] = [
   { name: "Projects", href: "/projects", icon: FolderKanban },
   { name: "About", href: "/about", icon: User },
   { name: "Contact", href: "/contact", icon: Mail },
-  { name: "Resume", href: "/resume", icon: File },
+  // { name: "Resume", href: "/resume", icon: File },
 ];
 
 interface NavbarProps {

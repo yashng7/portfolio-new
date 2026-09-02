@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Projects } from "contentlayer/generated";
+import type { Project } from "@/lib/content";
 import { Github, Globe } from "lucide-react";
 
 import { cn, formatDate } from "@/lib/utils";
@@ -11,7 +11,7 @@ import { PlaceholderImage } from "@/components/placeholder-image";
 import { DotPattern } from "@/components/backgrounds/dot-pattern";
 
 interface ProjectCardProps {
-  project: Projects;
+  project: Project;
   i: number;
 }
 

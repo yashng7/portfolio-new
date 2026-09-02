@@ -1,7 +1,7 @@
 import * as React from "react"
 import type { Metadata } from "next"
 import { env } from "@/env.mjs"
-import { allProjects } from "contentlayer/generated"
+import { getAllProjects } from "@/lib/content"
 
 import { Separator } from "@/components/ui/separator"
 import { PageHeader, PageHeaderDescription, PageHeaderHeading } from "@/components/page-header"
@@ -16,8 +16,9 @@ export const metadata: Metadata = {
   description: "Explore the latest news and updates from the community",
 }
 
-export default function ProjectsPage() {
-  const projects = allProjects.filter((project) => project.published).sort((a, b) => b.date.localeCompare(a.date))
+export default async function ProjectsPage() {
+  const allProjects = await getAllProjects()
+  const projects = allProjects.filter((project) => project.published)
 
   return (
     <Shell className="md:pb-10">
@@ -38,4 +39,3 @@ export default function ProjectsPage() {
     </Shell>
   )
 }
-
