@@ -78,13 +78,13 @@ export default async function HomePage() {
             >
               <Twitter className="w-5 h-5" />
             </Link>
-            <Link
+            <a
               href="mailto:contact@yashwantgawande.com"
               aria-label="Send Email"
               className="p-2 text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white transition-colors"
             >
               <Mail className="w-5 h-5" />
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -280,13 +280,13 @@ export default async function HomePage() {
               Feel free to reach out for collaborations, questions, or opportunities.
             </p>
           </div>
-          <Link
+          <a
             href="mailto:contact@yashwantgawande.com"
             className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200 shrink-0"
           >
             <Mail className="w-4 h-4 mr-2" />
             Get in touch
-          </Link>
+          </a>
         </div>
       </section>
     </div>
