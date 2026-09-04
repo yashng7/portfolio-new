@@ -201,23 +201,17 @@ export default function ResumePage() {
               <div>
                 <div className="flex items-start justify-between mb-2">
                   <div>
-                    <h3 className="text-lg font-semibold">Software Engineer Internship</h3>
-                    <p className="text-blue-600 dark:text-blue-400">Electronic Arts | Remote</p>
+                    <h3 className="text-lg font-semibold">Junior Software Developer</h3>
+                    <p className="text-blue-600 dark:text-blue-400">Mograsys Technologies · Full-time | Marmagao, Goa, India (On-site)</p>
                   </div>
-                  <span className="text-sm text-slate-500">June 2025</span>
+                  <span className="text-sm text-slate-500">Jun 2026 – Present · 4 mos</span>
                 </div>
                 <ul className="ml-4 space-y-1 list-disc list-inside text-slate-700 dark:text-slate-300">
                   <li>
-                    Proposed a new gameplay feature for EA Sports College Football, supported by a detailed feature
-                    proposal communicated to stakeholders
+                    Developing software applications and robust backend services as a full-time Junior Software Developer.
                   </li>
                   <li>
-                    Designed a class diagram and developed modular C++ header files, defining 100% of the required game
-                    object classes to support new functionality
-                  </li>
-                  <li>
-                    Diagnosed and patched a key inventory bug; optimized core logic by replacing fixed-size arrays with
-                    dynamic data structures, improving code maintainability and scalability by 40%
+                    Collaborating with cross-functional engineering teams to implement scalable features and maintain code quality.
                   </li>
                 </ul>
               </div>
@@ -227,28 +221,34 @@ export default function ResumePage() {
               <div>
                 <div className="flex items-start justify-between mb-2">
                   <div>
-                    <h3 className="text-lg font-semibold">Robotics & Controls Engineering Intern (Job Simulation)</h3>
-                    <p className="text-blue-600 dark:text-blue-400">Johnson & Johnson | Remote</p>
+                    <h3 className="text-lg font-semibold">Junior Software Developer</h3>
+                    <p className="text-blue-600 dark:text-blue-400">Tangentia · Full-time | Panaji, Goa, India (Hybrid)</p>
                   </div>
-                  <span className="text-sm text-slate-500">June 2025</span>
+                  <span className="text-sm text-slate-500">Aug 2025 – Jan 2026 · 6 mos</span>
                 </div>
                 <ul className="ml-4 space-y-1 list-disc list-inside text-slate-700 dark:text-slate-300">
                   <li>
-                    Completed a hands-on job simulation focused on optimizing the performance of a surgical robotic arm
-                    (Model RBA-2201)
+                    Engineered backend systems and integrated REST APIs to streamline client workflows.
                   </li>
                   <li>
-                    Used Python-based diagnostics to identify and resolve control system inefficiencies, reducing
-                    actuator response time by 15% (from 0.20s to 0.17s)
+                    Managed and queried relational databases using SQL for high data integrity and performance.
                   </li>
+                </ul>
+              </div>
+
+              <Separator />
+
+              <div>
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <h3 className="text-lg font-semibold">Technical Support Associate</h3>
+                    <p className="text-blue-600 dark:text-blue-400">Tangentia · Full-time | North Goa, Goa, India (Hybrid)</p>
+                  </div>
+                  <span className="text-sm text-slate-500">Jul 2025 – Aug 2025 · 2 mos</span>
+                </div>
+                <ul className="ml-4 space-y-1 list-disc list-inside text-slate-700 dark:text-slate-300">
                   <li>
-                    Proposed and documented design modifications through annotated technical diagrams, contributing to a
-                    10% increase in durability score
-                  </li>
-                  <li>
-                    Developed a professional, data-driven design proposal detailing findings, solutions, and engineering
-                    recommendations to improve precision, reliability, and long-term operational performance of robotic
-                    systems
+                    Delivered technical support operations, diagnosing issues and providing system troubleshooting.
                   </li>
                 </ul>
               </div>

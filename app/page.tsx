@@ -142,23 +142,82 @@ export default async function HomePage() {
         </h2>
 
         <div className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-            <div>
-              <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                Software Engineer Intern
-              </h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                Electronic Arts (EA)
-              </p>
+          {/* Mograsys Technologies */}
+          <div className="space-y-1">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+              <div>
+                <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                  Junior Software Developer
+                </h3>
+                <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                  Mograsys Technologies · Full-time
+                </p>
+              </div>
+              <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
+                Jun 2026 – Present · 4 mos
+              </span>
             </div>
-            <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
-              June 2025
-            </span>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              Marmagao, Goa, India · On-site
+            </p>
           </div>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-2xl">
-            Proposed gameplay architecture for EA Sports College Football with stakeholder design reviews.
-            Developed modular C++ header files and object structures to support new gameplay mechanics.
-          </p>
+
+          {/* Tangentia */}
+          <div className="space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+              <div>
+                <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                  Tangentia
+                </h3>
+                <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                  Full-time · 7 mos · Hybrid
+                </p>
+              </div>
+            </div>
+
+            {/* Nested Roles at Tangentia with Timeline */}
+            <div className="relative ml-1 border-l border-neutral-200 dark:border-neutral-800 space-y-6 pt-1">
+              {/* Junior Software Developer */}
+              <div className="relative pl-5">
+                <span className="absolute -left-1 top-1.5 h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600 ring-4 ring-white dark:ring-neutral-950" />
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
+                  <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    Junior Software Developer
+                  </h4>
+                  <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
+                    Aug 2025 – Jan 2026 · 6 mos
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-2">
+                  Panaji, Goa, India
+                </p>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border border-neutral-200/60 dark:border-neutral-700/60">
+                    REST APIs
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border border-neutral-200/60 dark:border-neutral-700/60">
+                    SQL
+                  </span>
+                </div>
+              </div>
+
+              {/* Technical Support Associate */}
+              <div className="relative pl-5">
+                <span className="absolute -left-1 top-1.5 h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600 ring-4 ring-white dark:ring-neutral-950" />
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
+                  <h4 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                    Technical Support Associate
+                  </h4>
+                  <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
+                    Jul 2025 – Aug 2025 · 2 mos
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  North Goa, Goa, India
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
