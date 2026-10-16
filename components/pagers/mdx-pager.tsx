@@ -35,6 +35,7 @@ export function MdxPager({
         <Link
           aria-label="Previous project"
           href={pager.prev.slug}
+          prefetch={true}
           className={cn(buttonVariants({ variant: "ghost" }))}
         >
           <Icons.chevronLeft className="w-4 h-4 mr-2" aria-hidden="true" />
@@ -45,6 +46,7 @@ export function MdxPager({
         <Link
           aria-label="Next project"
           href={pager.next.slug}
+          prefetch={true}
           className={cn(buttonVariants({ variant: "ghost" }), "ml-auto")}
         >
           {truncate(pager.next.title, 20)}

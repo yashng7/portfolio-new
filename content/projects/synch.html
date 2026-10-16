@@ -1,0 +1,51 @@
+---
+title: Synch
+description: A cutting-edge, fully-featured event monitoring SaaS platform built with modern technologies to track and analyze system events in real-time.
+image: "/images/projects/synch.png"
+date: "2024-10-31"
+link: "https://synch-sass-xi.vercel.app/"
+github: "https://github.com/yashng7/synch-sass"
+authors:
+  - yashng7
+---
+
+<h2>System Summary</h2>
+<p>
+  <strong>Synch</strong> is a real-time event monitoring and alerting SaaS platform engineered to ingest application events via REST APIs, stream live telemetry to a web dashboard over WebSockets, and dispatch instant notifications to Discord channels.
+</p>
+
+<h2>Architectural Overview</h2>
+<p>
+  Designed for engineering teams and indie SaaS operators, Synch provides a single pane of glass for critical business and infrastructure events—such as new user signups, payment failures, or production exceptions—delivered with sub-second latency.
+</p>
+
+<h2>Core Subsystems &amp; Capabilities</h2>
+
+<h3>01 // Real-Time Telemetry &amp; Alerting</h3>
+<ul>
+  <li><strong>Live WebSocket Event Stream</strong>: Push-based dashboard updates that surface incoming events immediately without manual polling.</li>
+  <li><strong>Instant Discord Webhook Dispatch</strong>: Automated rich-embed alerts routed directly to team Discord servers on critical events.</li>
+  <li><strong>Custom Event Categories &amp; Metadata</strong>: Structured JSON payload ingestion supporting arbitrary key-value attributes and severity tags.</li>
+  <li><strong>Time-Series Analytics Dashboard</strong>: Aggregated event volume charts and category breakdowns across daily, weekly, and monthly windows.</li>
+</ul>
+
+<h3>02 // Multi-Tenant SaaS Platform</h3>
+<ul>
+  <li><strong>API Key Provisioning &amp; Quota Enforcement</strong>: Per-tenant bearer token authentication with monthly event ingestion rate limits.</li>
+  <li><strong>Clerk Authentication &amp; Workspace Security</strong>: Seamless OAuth/email sign-in with protected dashboard routes.</li>
+  <li><strong>Stripe Subscription Billing</strong>: Automated plan upgrades unlocking higher event quotas and custom categories.</li>
+  <li><strong>PostgreSQL High-Throughput Storage</strong>: Indexed event tables optimized for fast time-range filtering and pagination.</li>
+</ul>
+
+<h2>Technical Specification</h2>
+<ul>
+  <li><strong>Frontend &amp; Routing</strong>: Next.js App Router, TypeScript, Tailwind CSS, shadcn/ui components.</li>
+  <li><strong>Backend &amp; Real-Time</strong>: Next.js API Routes, WebSocket connections, Discord REST API integration.</li>
+  <li><strong>Database</strong>: PostgreSQL with type-safe ORM queries and indexed timestamp lookups.</li>
+  <li><strong>Auth &amp; Billing</strong>: Clerk Authentication and Stripe webhook-driven entitlement management.</li>
+</ul>
+
+<h2>Engineering Challenges &amp; Solutions</h2>
+<p>
+  <strong>Reliable Event Ingestion with External Webhook Fan-Out</strong>: When an external service posts an event to Synch's ingestion API, the endpoint must validate the API key, persist the event to PostgreSQL, broadcast to active WebSocket clients, and trigger Discord notifications without blocking the caller. Decoupling validation and persistence from downstream notification delivery ensured fast API response times and resilient alert delivery.
+</p>

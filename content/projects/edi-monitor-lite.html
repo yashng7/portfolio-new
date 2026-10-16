@@ -1,0 +1,51 @@
+---
+title: EDI Monitor Lite
+description: A modern, full-stack EDI (Electronic Data Interchange) document monitoring and management system built with Next.js, Node.js, and shadcn/ui for real-time document processing and issue tracking.
+image: "/images/projects/edi-monitor-lite.png"
+date: "2025-07-17"
+link: "https://edi-monitor-lite.vercel.app/"
+github: "https://github.com/yashng7/edi-monitor-lite.git"
+authors:
+  - yashng7
+---
+
+<h2>System Summary</h2>
+<p>
+  <strong>EDI Monitor Lite</strong> is a specialized Electronic Data Interchange document monitoring and operational support platform engineered to handle real-time transaction queues, automated transmission validation, and structured L1/L2 incident escalation.
+</p>
+
+<h2>Operational Alignment &amp; Architecture</h2>
+<p>
+  Built specifically around enterprise EDI support workflows, the platform simulates high-volume document processing scenarios encountered in production supply-chain and B2B integrations—handling document transmission monitoring, error identification, issue escalation, and resolution tracking.
+</p>
+
+<h2>Core Subsystems &amp; Capabilities</h2>
+
+<h3>01 // EDI Document Pipeline</h3>
+<ul>
+  <li><strong>Document Processing Pipeline</strong>: Simulates X12 EDI document transmission workflows across 850 (Purchase Order), 810 (Invoice), and 856 (Advance Ship Notice) payloads.</li>
+  <li><strong>Real-Time Queue Telemetry</strong>: Live tracking of document ingestion states (Processed, Queued, Rejected) with instant status filtering.</li>
+  <li><strong>Automated Payload Validation</strong>: CSV and structured payload ingestion with schema validation and segment-level error pinpointing.</li>
+  <li><strong>Fault Detection Engine</strong>: Automated flagging and categorization of malformed segments or partner transmission timeouts.</li>
+</ul>
+
+<h3>02 // Incident &amp; Escalation Console</h3>
+<ul>
+  <li><strong>L1 → L2 Ticket Escalation</strong>: Structured incident creation linked directly to failed EDI transmission IDs.</li>
+  <li><strong>Resolution Knowledge Base</strong>: Persistent operational notes and root-cause logs attached to each transmission incident.</li>
+  <li><strong>Partner Alerting Workflow</strong>: Status update tracking for external trading partners and internal support shifts.</li>
+  <li><strong>24/7 Shift-Ready Interface</strong>: High-contrast dark and daylight modes optimized for continuous support operations.</li>
+</ul>
+
+<h2>Technical Specification</h2>
+<ul>
+  <li><strong>Frontend Architecture</strong>: Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui primitives.</li>
+  <li><strong>Backend &amp; Ingestion</strong>: Node.js, Express.js, Multer stream processing for structured document uploads.</li>
+  <li><strong>State &amp; Telemetry</strong>: Real-time queue state synchronization with responsive filtering and SLA status indicators.</li>
+  <li><strong>Deployment</strong>: Edge-ready frontend on Vercel with modular REST API endpoints.</li>
+</ul>
+
+<h2>Engineering Challenges &amp; Solutions</h2>
+<p>
+  <strong>High-Clarity Incident Triage</strong>: In enterprise EDI operations, support engineers must identify why a transaction failed within seconds. By coupling the document ingestion log directly with a structured L1-to-L2 ticket escalation drawer, the platform eliminates context switching between monitoring tools and ticketing systems.
+</p>

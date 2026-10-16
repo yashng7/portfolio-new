@@ -1,23 +1,18 @@
 import { notFound } from "next/navigation";
 import { getAllAuthors, getAllProjects, getProjectBySlug } from "@/lib/content";
-
 import { Mdx } from "@/components/mdx/mdx-components";
-
 import "@/styles/mdx.css";
-
 import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { env } from "@/env.mjs";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import { ArrowLeft, ArrowUpRight, Github, Globe } from "lucide-react";
 
-import { absoluteUrl, cn, formatDate } from "@/lib/utils";
+import { absoluteUrl, formatDate } from "@/lib/utils";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { buttonVariants } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { MdxPager } from "@/components/pagers/mdx-pager";
-import { Shell } from "@/components/shells/shell";
-import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+
+export const dynamic = "force-static";
 
 interface ProjectPageProps {
   params: {
@@ -92,102 +87,144 @@ export async function generateStaticParams(): Promise<
 }
 
 export default async function PostPage({ params }: ProjectPageProps) {
-  const project = await getProjectFromParams(params);
+  const [project, allProjects, allAuthors] = await Promise.all([
+    getProjectFromParams(params),
+    getAllProjects(),
+    getAllAuthors(),
+  ]);
 
   if (!project) {
     notFound();
   }
 
-  const allProjects = await getAllProjects();
-  const allAuthors = await getAllAuthors();
-
   const authors = project.authors.map((author) =>
-    allAuthors.find((a) => a.title.toLowerCase() === author?.trim().toLowerCase())
+    allAuthors.find(
+      (a) => a.title.toLowerCase() === author?.trim().toLowerCase()
+    )
   );
 
   return (
-    <Shell as="article" variant="markdown">
-      <Link
-        href="/projects"
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "absolute left-[-200px] top-14 hidden xl:inline-flex"
-        )}
-      >
-        <ChevronLeftIcon className="mr-2 size-4" aria-hidden="true" />
-        See all projects
-      </Link>
-      <div className="space-y-2">
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+    <article className="max-w-5xl mx-auto border-x border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 min-h-[calc(100vh-7rem)]">
+      {/* Top Blueprint Header */}
+      <div className="flex items-center justify-between px-4 sm:px-8 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-100/70 dark:bg-neutral-900/60 font-mono text-[11px]">
+        <Link
+          href="/projects"
+          prefetch={true}
+          className="inline-flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400 hover:text-orange-600 dark:hover:text-emerald-400 transition-colors"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>BACK TO SYSTEMS ARCHIVE</span>
+        </Link>
+        <div className="flex items-center gap-2 text-neutral-400 dark:text-neutral-500">
           {project.date && (
             <time dateTime={project.date}>{formatDate(project.date)}</time>
           )}
-          {project.date ? <div>•</div> : null}
-          <div>{project.readingTime}min</div>
+          <span>·</span>
+          <span>{project.readingTime} MIN SPEC</span>
         </div>
-        <h1 className="inline-block text-4xl font-bold leading-tight lg:text-5xl">
-          {project.title}
-        </h1>
-        {authors?.length ? (
-          <div className="flex items-center pt-4 space-x-4">
-            {authors.map((author) =>
-              author ? (
-                <Link
-                  key={author._id}
-                  href={`https://twitter.com/${author.twitter}`}
-                  className="flex items-center space-x-2 text-sm"
-                >
-                  <Image
-                    src={author.avatar}
-                    alt={author.title}
-                    width={40}
-                    height={40}
-                    className="bg-white rounded-full"
-                  />
-                  <div className="flex-1 leading-tight text-left">
-                    <p className="font-medium">{author.title}</p>
-                    <p className="text-[12px] text-muted-foreground">
-                      @{author.twitter}
-                    </p>
-                  </div>
-                </Link>
-              ) : null
+      </div>
+
+      <div className="p-6 sm:p-10 max-w-4xl mx-auto space-y-8">
+        {/* Title & Action Bar */}
+        <header className="space-y-5 pb-6 border-b border-neutral-200/80 dark:border-neutral-800/80">
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
+              {project.title}
+            </h1>
+            {project.description && (
+              <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                {project.description}
+              </p>
             )}
           </div>
-        ) : null}
-      </div>
-      {project.image && (
-        <AspectRatio ratio={16 / 9} className="my-5">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="border rounded-md bg-muted"
-            priority
-          />
-        </AspectRatio>
-      )}
-      <div className="flex items-center justify-end gap-5 mb-5">
-        <Link href={project.link} target="blank">
-          <InteractiveHoverButton>Visit Site</InteractiveHoverButton>
-        </Link>
-        <Link href={project.github} target="blank">
-          <InteractiveHoverButton>Source Code</InteractiveHoverButton>
-        </Link>
-      </div>
-      <Mdx source={project.content} />
-      <Separator className="my-5" />
-      <MdxPager currentItem={project} allItems={allProjects} />
-      <Link
-        href="/projects"
-        className={cn(
-          buttonVariants({ variant: "ghost", className: "mx-auto mt-4 w-fit" })
+
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+            {authors?.length ? (
+              <div className="flex items-center gap-3">
+                {authors.map((author) =>
+                  author ? (
+                    <Link
+                      key={author._id}
+                      href={`https://twitter.com/${author.twitter}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2.5 text-xs font-mono"
+                    >
+                      <Image
+                        src={author.avatar}
+                        alt={author.title}
+                        width={32}
+                        height={32}
+                        className="rounded-full border border-neutral-200 dark:border-neutral-800 bg-white"
+                      />
+                      <div className="leading-tight">
+                        <p className="font-semibold text-neutral-900 dark:text-neutral-100">
+                          {author.title}
+                        </p>
+                        <p className="text-[11px] text-neutral-500">
+                          @{author.twitter}
+                        </p>
+                      </div>
+                    </Link>
+                  ) : null
+                )}
+              </div>
+            ) : <div />}
+
+            <div className="flex items-center gap-3">
+              {project.link && (
+                <Link
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono uppercase tracking-wider font-semibold rounded-md bg-neutral-950 text-white hover:bg-orange-600 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-emerald-400 transition-colors"
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>Live Deployment</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              )}
+              {project.github && (
+                <Link
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-xs font-mono uppercase tracking-wider font-medium rounded-md border border-neutral-300 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 hover:border-orange-500/50 dark:hover:border-emerald-500/50 transition-colors"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  <span>Source Code</span>
+                </Link>
+              )}
+            </div>
+          </div>
+        </header>
+
+        {/* Preview Image */}
+        {project.image && (
+          <div className="rounded-lg overflow-hidden border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-100 dark:bg-neutral-900">
+            <AspectRatio ratio={16 / 9}>
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 896px"
+                className="object-cover"
+                priority
+              />
+            </AspectRatio>
+          </div>
         )}
-      >
-        <ChevronLeftIcon className="mr-2 size-4" aria-hidden="true" />
-        See all Projects
-        <span className="sr-only">See all Projects</span>
-      </Link>
-    </Shell>
+
+        {/* MDX Case Study Body */}
+        <div className="prose prose-neutral dark:prose-invert max-w-none pt-2">
+          <Mdx source={project.content} />
+        </div>
+
+        {/* Footer Pager */}
+        <div className="pt-8 border-t border-neutral-200/80 dark:border-neutral-800/80">
+          <MdxPager currentItem={project} allItems={allProjects} />
+        </div>
+      </div>
+    </article>
   );
 }

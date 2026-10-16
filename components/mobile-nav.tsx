@@ -49,6 +49,7 @@ export function MobileNavigation({ navigation }: MobileNavigationProps) {
               <SheetClose asChild key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={true}
                   className={cn(
                     "flex items-center justify-between py-3 px-2 rounded-md text-sm font-medium transition-colors hover:bg-muted",
                     pathname === item.href ? "bg-muted text-primary" : "text-muted-foreground",

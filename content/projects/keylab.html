@@ -1,0 +1,51 @@
+---
+title: KeyLab
+description: A feature-rich e-commerce website built with Next.js, TypeScript, and Tailwind CSS, offering seamless shopping experience and intuitive product management.
+image: "/images/projects/keylab.png"
+date: "2024-05-07"
+link: "https://keylab-lake.vercel.app/"
+github: "https://github.com/yashng7/keylab"
+authors:
+  - yashng7
+---
+
+<h2>System Summary</h2>
+<p>
+  <strong>KeyLab</strong> is a full-stack e-commerce platform engineered for enthusiast mechanical keyboards and hardware accessories—combining a fast storefront with a complete merchant inventory and analytics dashboard.
+</p>
+
+<h2>Architectural Overview</h2>
+<p>
+  KeyLab bridges high-conversion storefront UX with back-office operational control. It pairs server-rendered product catalogs and dynamic filtering with secure checkout flows and real-time inventory tracking.
+</p>
+
+<h2>Core Subsystems &amp; Capabilities</h2>
+
+<h3>01 // Storefront &amp; Commerce Engine</h3>
+<ul>
+  <li><strong>Dynamic Catalog &amp; Filtering</strong>: Instant search and multi-attribute filtering across switches, keycaps, and custom boards.</li>
+  <li><strong>Persistent Cart State</strong>: Optimistic cart updates with variant validation and real-time subtotal calculation.</li>
+  <li><strong>Secure Checkout Pipeline</strong>: End-to-end payment processing with order confirmation and customer receipt generation.</li>
+  <li><strong>Customer Order Portal</strong>: Authenticated account history and live fulfillment status tracking.</li>
+</ul>
+
+<h3>02 // Merchant Admin Console</h3>
+<ul>
+  <li><strong>Product &amp; SKU Management</strong>: Full CRUD interface for managing product variants, pricing, and media assets.</li>
+  <li><strong>Revenue &amp; Order Analytics</strong>: Visual sales performance metrics and order fulfillment queues.</li>
+  <li><strong>Stock Level Monitoring</strong>: Automated low-inventory tracking to prevent overselling.</li>
+  <li><strong>Role-Based Access Control</strong>: Protected administrative routes and secure session management.</li>
+</ul>
+
+<h2>Technical Specification</h2>
+<ul>
+  <li><strong>Frontend Framework</strong>: Next.js, React, TypeScript for end-to-end type safety.</li>
+  <li><strong>Styling System</strong>: Tailwind CSS &amp; modular SCSS for custom hardware showcase layouts.</li>
+  <li><strong>Authentication &amp; Security</strong>: Protected API routes, session validation, and role-based authorization.</li>
+  <li><strong>Commerce Infrastructure</strong>: Integrated payment gateway and relational order persistence.</li>
+</ul>
+
+<h2>Engineering Challenges &amp; Solutions</h2>
+<p>
+  <strong>Synchronizing Storefront Speed with Live Inventory</strong>: E-commerce storefronts demand instant page loads while preventing race conditions on limited-stock items. Leveraging Next.js server rendering alongside strict checkout stock verification ensured sub-second browsing with reliable inventory accuracy.
+</p>

@@ -1,0 +1,51 @@
+---
+title: UX4G
+description: A comprehensive UI component library for Indian government digital services, focusing on accessibility, multilingual support, and a consistent design system.
+image: "/images/projects/ux4g.png"
+date: "2025-09-15"
+link: "https://ui-ruby-seven.vercel.app/"
+github: "https://github.com/ux4g-ui/ui"
+authors:
+  - yashng7
+---
+
+<h2>System Summary</h2>
+<p>
+  <strong>UX4G (User Experience for Government)</strong> is a comprehensive, accessible UI component library and design system engineered for Indian public digital infrastructure—prioritizing WCAG 2.1 AA compliance, Indic script typography, and copy-paste developer ergonomics.
+</p>
+
+<h2>Architectural Overview</h2>
+<p>
+  Public digital services must be usable by every citizen regardless of device capability, language, or assistive technology. UX4G provides standardized, accessible Radix UI + Tailwind CSS primitives and production page templates tailored for citizen-facing portals.
+</p>
+
+<h2>Core Subsystems &amp; Capabilities</h2>
+
+<h3>01 // Accessibility &amp; Indic Localization</h3>
+<ul>
+  <li><strong>WCAG 2.1 Level AA Compliance</strong>: Calibrated color contrast ratios, visible focus rings, and full ARIA attribute semantics across every primitive.</li>
+  <li><strong>Multilingual Indic Script Support</strong>: Typography scales and line-height metrics tested for Devanagari and regional Indian scripts without clipping.</li>
+  <li><strong>Keyboard &amp; Screen Reader Navigation</strong>: Deterministic tab order, focus trapping in dialogs, and screen-reader announcements.</li>
+  <li><strong>Authoritative Civic Design Language</strong>: Clean, high-trust visual hierarchy designed for official public-sector portals.</li>
+</ul>
+
+<h3>02 // Developer Experience &amp; Templates</h3>
+<ul>
+  <li><strong>Zero-Lock-In Copy-Paste Architecture</strong>: Components ship as clean, inspectable TypeScript source files with zero opaque npm wrapper overhead.</li>
+  <li><strong>Ready-to-Deploy Civic Templates</strong>: Pre-built layouts for citizen service dashboards, multi-step application forms, and status trackers.</li>
+  <li><strong>Composable Radix Primitives</strong>: Built on unstyled, battle-tested Radix UI behavior primitives styled with Tailwind CSS.</li>
+  <li><strong>Interactive Component Documentation</strong>: Live interactive previews with one-click source code inspection.</li>
+</ul>
+
+<h2>Technical Specification</h2>
+<ul>
+  <li><strong>Framework</strong>: Next.js 15, React, TypeScript.</li>
+  <li><strong>UI Primitives</strong>: Radix UI primitives with custom keyboard and ARIA enhancements.</li>
+  <li><strong>Styling System</strong>: Tailwind CSS with semantic design tokens and dark/light mode support.</li>
+  <li><strong>Iconography</strong>: Lucide React vector icons with accessible labeling.</li>
+</ul>
+
+<h2>Engineering Challenges &amp; Solutions</h2>
+<p>
+  <strong>Harmonizing Multilingual Typography with Strict Accessibility</strong>: Indic scripts require taller vertical ascenders and descenders than Latin text, which often breaks fixed-height buttons and form inputs. Designing fluid vertical padding tokens and relative line-height rules ensured every component renders crisply across English and Indic languages while meeting strict WCAG 2.1 AA contrast and target-size guidelines.
+</p>

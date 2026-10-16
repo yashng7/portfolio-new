@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import {
   Github,
   Flame,
@@ -24,8 +25,16 @@ interface GithubActivityProps {
 type Timeframe = "3m" | "6m" | "1y";
 
 export function GithubActivity({ initialData, className }: GithubActivityProps) {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [timeframe, setTimeframe] = useState<Timeframe>("6m");
   const [hoveredDay, setHoveredDay] = useState<ContributionDay | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted ? resolvedTheme === "dark" : true;
 
   // Filter days based on selected timeframe
   const filteredDays = useMemo(() => {
@@ -65,7 +74,7 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
     if (columns.length === 0) return "";
     const colTotals = columns.map((c) => c.reduce((acc, d) => acc + d.count, 0));
     const maxCol = Math.max(...colTotals, 1);
-    const height = 48; // max svg height for the wave
+    const height = 48;
 
     return colTotals
       .map((val, idx) => {
@@ -126,10 +135,13 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
     }
   };
 
+  const waveColor = isDark ? "#10b981" : "#f97316";
+  const waveGradientEnd = isDark ? "#06b6d4" : "#fbbf24";
+
   return (
     <div
       className={cn(
-        "rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 p-6 md:p-8 space-y-8 backdrop-blur-sm",
+        "rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 sm:p-7 space-y-7",
         className
       )}
     >
@@ -137,12 +149,12 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="flex h-2 w-2 rounded-full bg-orange-500 dark:bg-emerald-500 animate-pulse" />
             <Link
               href={`https://github.com/${initialData.username}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-neutral-600 hover:text-orange-600 dark:text-neutral-400 dark:hover:text-emerald-400 transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               github.com/{initialData.username}
@@ -150,23 +162,24 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
             </Link>
           </div>
           <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
-            Engineering Velocity
+            Live Commit Spectrogram &amp; Momentum
           </h3>
-          <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+          <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
             Continuous rhythm of commits, architectural refactors, and open-source systems.
           </p>
         </div>
 
         {/* Timeframe Pill Filter */}
-        <div className="inline-flex items-center p-1 rounded-lg bg-neutral-200/60 dark:bg-neutral-800/60 border border-neutral-300/60 dark:border-neutral-700/60 self-start sm:self-center">
+        <div className="inline-flex items-center p-1 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 self-start sm:self-center">
           {(["3m", "6m", "1y"] as Timeframe[]).map((tf) => (
             <button
               key={tf}
+              type="button"
               onClick={() => setTimeframe(tf)}
               className={cn(
-                "px-2.5 py-1 text-xs font-medium rounded-md transition-all",
+                "px-2.5 py-1 text-xs font-mono font-medium rounded-md transition-all",
                 timeframe === tf
-                  ? "bg-white text-neutral-950 dark:bg-neutral-900 dark:text-neutral-50 shadow-sm"
+                  ? "bg-neutral-950 text-white dark:bg-neutral-100 dark:text-neutral-950 shadow-sm"
                   : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white"
               )}
             >
@@ -179,10 +192,10 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {/* Total Contributions */}
-        <div className="p-4 rounded-lg border border-neutral-200/80 dark:border-neutral-800/80 bg-white/60 dark:bg-neutral-950/40 space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400">
+        <div className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/70 space-y-1">
+          <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400">
             <span className="text-xs font-medium">Activity Total</span>
-            <Activity className="w-4 h-4 text-emerald-500" />
+            <Activity className="w-4 h-4 text-orange-500 dark:text-emerald-500" />
           </div>
           <div className="text-2xl font-bold font-mono text-neutral-950 dark:text-neutral-50">
             {timeframeContributions}
@@ -193,13 +206,16 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
         </div>
 
         {/* Current Streak */}
-        <div className="p-4 rounded-lg border border-neutral-200/80 dark:border-neutral-800/80 bg-white/60 dark:bg-neutral-950/40 space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400">
+        <div className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/70 space-y-1">
+          <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400">
             <span className="text-xs font-medium">Current Streak</span>
             <Flame className="w-4 h-4 text-amber-500" />
           </div>
           <div className="text-2xl font-bold font-mono text-neutral-950 dark:text-neutral-50">
-            {initialData.currentStreak} <span className="text-xs font-normal font-sans text-neutral-500">days</span>
+            {initialData.currentStreak}{" "}
+            <span className="text-xs font-normal font-sans text-neutral-500 dark:text-neutral-400">
+              days
+            </span>
           </div>
           <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
             Consecutive active days
@@ -207,13 +223,16 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
         </div>
 
         {/* Longest Streak */}
-        <div className="p-4 rounded-lg border border-neutral-200/80 dark:border-neutral-800/80 bg-white/60 dark:bg-neutral-950/40 space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400">
+        <div className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/70 space-y-1">
+          <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400">
             <span className="text-xs font-medium">Longest Run</span>
             <Trophy className="w-4 h-4 text-amber-400" />
           </div>
           <div className="text-2xl font-bold font-mono text-neutral-950 dark:text-neutral-50">
-            {initialData.longestStreak} <span className="text-xs font-normal font-sans text-neutral-500">days</span>
+            {initialData.longestStreak}{" "}
+            <span className="text-xs font-normal font-sans text-neutral-500 dark:text-neutral-400">
+              days
+            </span>
           </div>
           <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
             All-time streak record
@@ -221,17 +240,24 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
         </div>
 
         {/* Active Days */}
-        <div className="p-4 rounded-lg border border-neutral-200/80 dark:border-neutral-800/80 bg-white/60 dark:bg-neutral-950/40 space-y-1">
-          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400">
+        <div className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/70 space-y-1">
+          <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400">
             <span className="text-xs font-medium">Active Rate</span>
             <Calendar className="w-4 h-4 text-cyan-500" />
           </div>
           <div className="text-2xl font-bold font-mono text-neutral-950 dark:text-neutral-50">
             {filteredDays.filter((d) => d.count > 0).length}{" "}
-            <span className="text-xs font-normal font-sans text-neutral-500">/ {filteredDays.length}d</span>
+            <span className="text-xs font-normal font-sans text-neutral-500 dark:text-neutral-400">
+              / {filteredDays.length}d
+            </span>
           </div>
           <p className="text-[11px] text-neutral-500 dark:text-neutral-400">
-            {Math.round((filteredDays.filter((d) => d.count > 0).length / (filteredDays.length || 1)) * 100)}% active velocity
+            {Math.round(
+              (filteredDays.filter((d) => d.count > 0).length /
+                (filteredDays.length || 1)) *
+                100
+            )}
+            % active velocity
           </p>
         </div>
       </div>
@@ -240,17 +266,17 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
       <div className="space-y-6">
         {/* Momentum Horizon Waveform */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 px-0.5">
-            <span className="flex items-center gap-1.5 uppercase tracking-wider text-[11px] font-semibold text-neutral-700 dark:text-neutral-300">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+          <div className="flex items-center justify-between text-xs font-mono text-neutral-600 dark:text-neutral-400 px-0.5">
+            <span className="flex items-center gap-1.5 uppercase tracking-wider text-[11px] font-semibold text-neutral-800 dark:text-neutral-200">
+              <Sparkles className="w-3.5 h-3.5 text-orange-500 dark:text-emerald-500" />
               Rolling Weekly Momentum Wave
             </span>
-            <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
+            <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
               7-day moving velocity
             </span>
           </div>
 
-          <div className="relative w-full h-14 overflow-hidden rounded-lg bg-neutral-100/60 dark:bg-neutral-950/50 border border-neutral-200/60 dark:border-neutral-800/60 p-1 flex items-end">
+          <div className="relative w-full h-14 overflow-hidden rounded-lg bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 p-1 flex items-end">
             <svg
               viewBox="0 0 100 48"
               preserveAspectRatio="none"
@@ -258,8 +284,8 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
             >
               <defs>
                 <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.0" />
+                  <stop offset="0%" stopColor={waveColor} stopOpacity="0.4" />
+                  <stop offset="100%" stopColor={waveGradientEnd} stopOpacity="0.0" />
                 </linearGradient>
               </defs>
               {momentumPoints && (
@@ -270,7 +296,7 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
                   />
                   <polyline
                     fill="none"
-                    stroke="#10b981"
+                    stroke={waveColor}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -284,16 +310,16 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
 
         {/* Pulse Bar Columns (Spectrogram Equalizer) */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 px-0.5">
-            <span className="uppercase tracking-wider text-[11px] font-semibold text-neutral-700 dark:text-neutral-300">
+          <div className="flex items-center justify-between text-xs font-mono text-neutral-600 dark:text-neutral-400 px-0.5">
+            <span className="uppercase tracking-wider text-[11px] font-semibold text-neutral-800 dark:text-neutral-200">
               Daily Activity Spectrum
             </span>
-            <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
+            <span className="text-[11px] text-neutral-500 dark:text-neutral-400">
               {timeframeContributions} contributions in range
             </span>
           </div>
 
-          <div className="relative rounded-lg border border-neutral-200/60 dark:border-neutral-800/60 bg-neutral-100/40 dark:bg-neutral-950/30 p-3">
+          <div className="relative rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/80 p-3">
             <div className="overflow-x-auto pb-2 scrollbar-thin">
               <div className="flex items-end gap-[3px] sm:gap-1 min-w-[580px] h-28 px-1 py-1">
                 {filteredDays.map((day) => {
@@ -317,15 +343,15 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
                         className={cn(
                           "w-full rounded-t-sm transition-all duration-200",
                           day.count === 0
-                            ? "bg-neutral-200/80 dark:bg-neutral-800/80 group-hover:bg-neutral-300 dark:group-hover:bg-neutral-700"
+                            ? "bg-neutral-200 dark:bg-neutral-800 group-hover:bg-neutral-300 dark:group-hover:bg-neutral-700"
                             : day.level === 1
-                            ? "bg-emerald-500/50 dark:bg-emerald-400/50 group-hover:bg-emerald-500"
+                            ? "bg-orange-500/50 dark:bg-emerald-500/50 group-hover:bg-orange-500 dark:group-hover:bg-emerald-500"
                             : day.level === 2
-                            ? "bg-emerald-500/75 dark:bg-emerald-400/80 group-hover:bg-emerald-400"
+                            ? "bg-orange-500/80 dark:bg-emerald-400/80 group-hover:bg-orange-400 dark:group-hover:bg-emerald-400"
                             : day.level === 3
-                            ? "bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.35)]"
-                            : "bg-gradient-to-t from-emerald-500 to-cyan-400 dark:from-emerald-400 dark:to-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.5)]",
-                          isHovered && "ring-2 ring-emerald-400 dark:ring-emerald-300 scale-y-105 z-10"
+                            ? "bg-orange-500 dark:bg-emerald-500 shadow-[0_0_8px_rgba(249,115,22,0.35)] dark:shadow-[0_0_8px_rgba(16,185,129,0.35)]"
+                            : "bg-gradient-to-t from-orange-500 to-amber-400 dark:from-emerald-400 dark:to-cyan-300 shadow-[0_0_12px_rgba(249,115,22,0.5)] dark:shadow-[0_0_12px_rgba(6,182,212,0.5)]",
+                          isHovered && "ring-2 ring-orange-400 dark:ring-emerald-300 scale-y-105 z-10"
                         )}
                       />
                     </div>
@@ -335,7 +361,7 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
 
               {/* Month Timeline Labels */}
               {monthMarkers.length > 0 && (
-                <div className="flex justify-between text-[10px] font-mono text-neutral-400 dark:text-neutral-500 pt-2 px-1 border-t border-neutral-200/50 dark:border-neutral-800/50 min-w-[580px]">
+                <div className="flex justify-between text-[10px] font-mono text-neutral-500 dark:text-neutral-400 pt-2 px-1 border-t border-neutral-200 dark:border-neutral-800 min-w-[580px]">
                   {monthMarkers.map((marker) => (
                     <span key={marker.label + marker.index}>{marker.label}</span>
                   ))}
@@ -343,55 +369,55 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
               )}
             </div>
 
-          {/* Interactive Dynamic Inspector Tooltip */}
-          <div className="mt-2 flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400 px-1 border-t border-neutral-200/60 dark:border-neutral-800/60 pt-3">
-            {hoveredDay ? (
-              <div className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100 animate-fade-in">
-                <span
-                  className={cn(
-                    "w-2 h-2 rounded-full",
-                    hoveredDay.count > 0 ? "bg-emerald-500 animate-pulse" : "bg-neutral-400"
-                  )}
-                />
-                <span className="font-semibold">
-                  {hoveredDay.count} {hoveredDay.count === 1 ? "contribution" : "contributions"}
-                </span>
-                <span className="text-neutral-400 dark:text-neutral-600">•</span>
-                <span>{formatDate(hoveredDay.date)}</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 text-neutral-500 dark:text-neutral-400">
-                <span>Hover over the spectrum to inspect daily commits</span>
-              </div>
-            )}
+            {/* Interactive Dynamic Inspector Tooltip */}
+            <div className="mt-2 flex items-center justify-between text-xs font-mono text-neutral-600 dark:text-neutral-400 px-1 border-t border-neutral-200 dark:border-neutral-800 pt-3">
+              {hoveredDay ? (
+                <div className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100 animate-fade-in">
+                  <span
+                    className={cn(
+                      "w-2 h-2 rounded-full",
+                      hoveredDay.count > 0 ? "bg-orange-500 dark:bg-emerald-500 animate-pulse" : "bg-neutral-400"
+                    )}
+                  />
+                  <span className="font-semibold">
+                    {hoveredDay.count} {hoveredDay.count === 1 ? "contribution" : "contributions"}
+                  </span>
+                  <span className="text-neutral-400 dark:text-neutral-600">•</span>
+                  <span>{formatDate(hoveredDay.date)}</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 text-neutral-500 dark:text-neutral-400">
+                  <span>Hover over the spectrum to inspect daily commits</span>
+                </div>
+              )}
 
-            {/* Intensity Legend */}
-            <div className="flex items-center gap-1.5 text-[11px]">
-              <span>Zero</span>
-              <span className="w-2.5 h-2.5 rounded-sm bg-neutral-200 dark:bg-neutral-800 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500/50 dark:bg-emerald-400/50 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500/80 dark:bg-emerald-400/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-sm bg-gradient-to-t from-emerald-500 to-cyan-400 inline-block" />
-              <span>Max</span>
+              {/* Intensity Legend */}
+              <div className="flex items-center gap-1.5 text-[11px] text-neutral-600 dark:text-neutral-400">
+                <span>Zero</span>
+                <span className="w-2.5 h-2.5 rounded-sm bg-neutral-200 dark:bg-neutral-800 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-sm bg-orange-500/50 dark:bg-emerald-500/50 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-sm bg-orange-500/80 dark:bg-emerald-400/80 inline-block" />
+                <span className="w-2.5 h-2.5 rounded-sm bg-gradient-to-t from-orange-500 to-amber-400 dark:from-emerald-400 dark:to-cyan-300 inline-block" />
+                <span>Max</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
       {/* Active Repositories Stream */}
       {initialData.recentRepos && initialData.recentRepos.length > 0 && (
         <div className="space-y-3 pt-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5">
-              <GitBranch className="w-3.5 h-3.5 text-emerald-500" />
+            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+              <GitBranch className="w-3.5 h-3.5 text-orange-500 dark:text-emerald-500" />
               Recently Active Repositories
             </span>
             <Link
               href={`https://github.com/${initialData.username}?tab=repositories`}
               target="_blank"
               rel="noreferrer"
-              className="text-xs text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white inline-flex items-center gap-1 transition-colors"
+              className="text-xs font-mono text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white inline-flex items-center gap-1 transition-colors"
             >
               All repos
               <ArrowUpRight className="w-3 h-3" />
@@ -405,23 +431,23 @@ export function GithubActivity({ initialData, className }: GithubActivityProps) 
                 href={repo.url}
                 target="_blank"
                 rel="noreferrer"
-                className="group p-3.5 rounded-lg border border-neutral-200/80 dark:border-neutral-800/80 bg-white/40 dark:bg-neutral-950/20 hover:bg-neutral-100/70 dark:hover:bg-neutral-900/60 transition-all flex flex-col justify-between gap-2"
+                className="group p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-all flex flex-col justify-between gap-2"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2 font-mono text-xs font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors truncate">
-                    <GitCommit className="w-3.5 h-3.5 shrink-0 text-neutral-400 group-hover:text-emerald-500 transition-colors" />
+                  <div className="flex items-center gap-2 font-mono text-xs font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-orange-600 dark:group-hover:text-emerald-400 transition-colors truncate">
+                    <GitCommit className="w-3.5 h-3.5 shrink-0 text-neutral-400 group-hover:text-orange-500 dark:group-hover:text-emerald-500 transition-colors" />
                     <span className="truncate">{repo.name}</span>
                   </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-neutral-950 dark:group-hover:text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
                 </div>
 
                 {repo.description && (
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1">
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 line-clamp-1">
                     {repo.description}
                   </p>
                 )}
 
-                <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400 dark:text-neutral-500 pt-1 border-t border-neutral-200/40 dark:border-neutral-800/40">
+                <div className="flex items-center justify-between text-[11px] font-mono text-neutral-500 dark:text-neutral-400 pt-1 border-t border-neutral-200 dark:border-neutral-800">
                   <span>Updated {formatRelativeTime(repo.pushedAt)}</span>
                   {repo.stargazerCount > 0 && (
                     <span>★ {repo.stargazerCount}</span>

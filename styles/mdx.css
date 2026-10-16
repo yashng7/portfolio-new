@@ -1,32 +1,103 @@
+/* Swiss Telemetry Monolith — Native Semantic HTML Typography (.mdx) */
+.mdx {
+  @apply text-neutral-700 dark:text-neutral-300 leading-relaxed;
+}
+
+.mdx > *:first-child {
+  @apply mt-0;
+}
+
+.mdx h1 {
+  @apply mt-8 mb-4 scroll-m-20 text-2xl sm:text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50;
+}
+
+.mdx h2 {
+  @apply mt-10 mb-4 scroll-m-20 flex items-center gap-2.5 border-b border-neutral-200 dark:border-neutral-800 pb-2.5 text-lg sm:text-xl font-bold tracking-tight text-neutral-950 dark:text-neutral-100 first:mt-0;
+}
+
+.mdx h2::before {
+  content: "//";
+  @apply font-mono text-xs font-semibold text-orange-600 dark:text-emerald-400 tracking-normal;
+}
+
+.mdx h3 {
+  @apply mt-6 mb-2.5 scroll-m-20 font-mono text-xs sm:text-sm uppercase tracking-wider font-semibold text-orange-600 dark:text-emerald-400 flex items-center gap-2;
+}
+
+.mdx h4 {
+  @apply mt-5 mb-2 scroll-m-20 text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100;
+}
+
+.mdx p {
+  @apply text-sm sm:text-base leading-7 text-neutral-600 dark:text-neutral-300 my-3.5;
+}
+
+.mdx ul {
+  @apply my-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 list-none pl-0;
+}
+
+.mdx ol {
+  @apply my-4 ml-6 list-decimal space-y-2;
+}
+
+.mdx li {
+  @apply relative pl-6 py-2.5 pr-3.5 rounded-md border border-neutral-200 dark:border-neutral-800/90 bg-neutral-50/80 dark:bg-neutral-900/50 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300 transition-colors hover:border-orange-500/40 dark:hover:border-emerald-500/40;
+}
+
+.mdx ul > li::before {
+  content: "▸";
+  @apply absolute left-2.5 top-2.5 font-mono text-xs text-orange-600 dark:text-emerald-400;
+}
+
+.mdx strong {
+  @apply font-semibold text-neutral-950 dark:text-neutral-100;
+}
+
+.mdx a {
+  @apply font-medium text-orange-600 dark:text-emerald-400 underline underline-offset-4 decoration-orange-500/40 dark:decoration-emerald-500/40 hover:decoration-orange-600 dark:hover:decoration-emerald-400 transition-colors;
+}
+
+.mdx hr {
+  @apply my-8 border-neutral-200 dark:border-neutral-800;
+}
+
+.mdx blockquote {
+  @apply my-6 border-l-2 border-orange-500 dark:border-emerald-500 pl-5 py-1 italic text-neutral-600 dark:text-neutral-400 bg-neutral-100/50 dark:bg-neutral-900/40 rounded-r-md;
+}
+
+.mdx code {
+  @apply relative rounded bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-1.5 py-0.5 font-mono text-xs text-neutral-900 dark:text-neutral-200;
+}
+
 [data-rehype-pretty-code-fragment] code {
-    @apply grid min-w-full p-0 text-sm text-black break-words bg-transparent border-0 rounded-none;
-    counter-reset: line;
-    box-decoration-break: clone;
-  }
-  [data-rehype-pretty-code-fragment] .line {
-    @apply px-4 py-1;
-  }
-  [data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
-    counter-increment: line;
-    content: counter(line);
-    display: inline-block;
-    width: 1rem;
-    margin-right: 1rem;
-    text-align: right;
-    color: gray;
-  }
-  [data-rehype-pretty-code-fragment] .line--highlighted {
-    @apply bg-slate-300 bg-opacity-10;
-  }
-  [data-rehype-pretty-code-fragment] .line-highlighted span {
-    @apply relative;
-  }
-  [data-rehype-pretty-code-fragment] .word--highlighted {
-    @apply p-1 rounded-md bg-slate-300 bg-opacity-10;
-  }
-  [data-rehype-pretty-code-title] {
-    @apply px-4 py-2 mt-4 text-sm font-medium;
-  }
-  [data-rehype-pretty-code-title] + pre {
-    @apply mt-0;
-  }
+  @apply grid min-w-full p-0 text-sm text-black break-words bg-transparent border-0 rounded-none;
+  counter-reset: line;
+  box-decoration-break: clone;
+}
+[data-rehype-pretty-code-fragment] .line {
+  @apply px-4 py-1;
+}
+[data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: gray;
+}
+[data-rehype-pretty-code-fragment] .line--highlighted {
+  @apply bg-slate-300 bg-opacity-10;
+}
+[data-rehype-pretty-code-fragment] .line-highlighted span {
+  @apply relative;
+}
+[data-rehype-pretty-code-fragment] .word--highlighted {
+  @apply p-1 rounded-md bg-slate-300 bg-opacity-10;
+}
+[data-rehype-pretty-code-title] {
+  @apply px-4 py-2 mt-4 text-sm font-medium;
+}
+[data-rehype-pretty-code-title] + pre {
+  @apply mt-0;
+}

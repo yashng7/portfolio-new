@@ -1,0 +1,51 @@
+---
+title: Minimal CV
+description: A clean, responsive portfolio resume template built with Next.js, featuring dark mode and print functionality.
+image: "/images/projects/minimal-cv.png"
+date: "2025-01-15"
+link: "https://resume-snowy-sigma.vercel.app/"
+github: "https://github.com/yashng7/minimal-cv"
+authors:
+  - yashng7
+---
+
+<h2>System Summary</h2>
+<p>
+  <strong>Minimal CV</strong> is a lightweight, print-engineered developer curriculum vitae and portfolio system built with Next.js, TypeScript, and Tailwind CSS—designed to render identically on high-DPI screens and exported A4/Letter PDFs.
+</p>
+
+<h2>Architectural Overview</h2>
+<p>
+  Most web portfolios break when printed to PDF, while static PDFs lack interactivity and dark-mode ergonomics. Minimal CV unifies both mediums into a single structured data source with dedicated screen and `@media print` layout engines.
+</p>
+
+<h2>Core Subsystems &amp; Capabilities</h2>
+
+<h3>01 // Dual-Medium Rendering Engine</h3>
+<ul>
+  <li><strong>Print-First Stylesheet Architecture</strong>: Dedicated `@media print` rules that strip navigation chrome and format typography for single-page PDF export.</li>
+  <li><strong>Zero-Latency Theme Persistence</strong>: Instant dark/light mode switching powered by `next-themes` with zero flash of unstyled content.</li>
+  <li><strong>Responsive Grid Topology</strong>: Fluid layout adapting seamlessly from mobile viewports to desktop monitors.</li>
+  <li><strong>Minimal Dependency Footprint</strong>: Engineered for 100/100 Lighthouse performance and instantaneous First Contentful Paint.</li>
+</ul>
+
+<h3>02 // Structured Dossier Modules</h3>
+<ul>
+  <li><strong>Executive Identity Header</strong>: Direct contact endpoints, location metadata, and social verification links.</li>
+  <li><strong>Chronological Experience Log</strong>: Structured role timelines with company badges and impact summaries.</li>
+  <li><strong>Education &amp; Certifications</strong>: Verified academic credentials and technical certifications index.</li>
+  <li><strong>Categorized Skills Matrix</strong>: Scannable technology tags grouped by engineering domain.</li>
+</ul>
+
+<h2>Technical Specification</h2>
+<ul>
+  <li><strong>Framework</strong>: Next.js with Static Site Generation (SSG).</li>
+  <li><strong>Language</strong>: Strict TypeScript configuration for structured resume data schemas.</li>
+  <li><strong>Styling &amp; Print Engine</strong>: Tailwind CSS with custom print-media utility rules.</li>
+  <li><strong>Theming</strong>: `next-themes` with system preference detection.</li>
+</ul>
+
+<h2>Engineering Challenges &amp; Solutions</h2>
+<p>
+  <strong> deterministic Web-to-PDF Pagination</strong>: Browser print engines often slice cards or headings awkwardly across page boundaries. By implementing strict `break-inside: avoid` rules and calibrated print typography scales, Minimal CV exports clean, recruiter-ready PDFs directly from the browser.
+</p>

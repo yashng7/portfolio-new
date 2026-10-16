@@ -1,0 +1,51 @@
+---
+title: ResumeAI
+description: A modern SaaS application that leverages AI to help users create professional resumes with features like auto-fill, drag-and-drop sections, and multiple subscription tiers.
+image: "/images/projects/resume-ai.png"
+date: "2024-11-08"
+link: "https://resume-ai-smoky-eight.vercel.app"
+github: "https://github.com/yashng7/resume-ai"
+authors:
+  - yashng7
+---
+
+<h2>System Summary</h2>
+<p>
+  <strong>ResumeAI</strong> is a full-stack AI SaaS platform that streamlines technical resume authoring through Gemini AI content generation, interactive drag-and-drop section ordering, debounced cloud auto-save, and multi-tier Stripe billing.
+</p>
+
+<h2>Architectural Overview</h2>
+<p>
+  ResumeAI combines a multi-step React Hook Form state machine with real-time live preview rendering. Users can generate tailored experience bullet points via the Gemini AI API, reorder sections with `dnd-kit`, and export print-ready PDFs.
+</p>
+
+<h2>Core Subsystems &amp; Capabilities</h2>
+
+<h3>01 // AI Authoring &amp; Interactive Editor</h3>
+<ul>
+  <li><strong>Gemini AI Auto-Fill Pipeline</strong>: Context-aware prompt orchestration that generates high-impact resume summaries and experience bullets.</li>
+  <li><strong>Drag-and-Drop Section Ordering</strong>: Smooth, accessible section rearrangement powered by `dnd-kit` with instant preview synchronization.</li>
+  <li><strong>Multi-Step Form State Machine</strong>: URL-synchronized step navigation built with React Hook Form and Zod schema validation.</li>
+  <li><strong>Debounced Cloud Auto-Save</strong>: Background state persistence ensuring zero data loss during editing sessions.</li>
+</ul>
+
+<h3>02 // SaaS Infrastructure &amp; Monetization</h3>
+<ul>
+  <li><strong>Multi-Tier Stripe Subscriptions</strong>: Webhook-synchronized subscription gates for Free, Pro, and Plus feature tiers.</li>
+  <li><strong>Cloud Asset Storage</strong>: Profile photo and document asset management backed by Vercel Blob storage.</li>
+  <li><strong>PostgreSQL Relational Persistence</strong>: Normalized schema storing user profiles, resume versions, and subscription entitlements.</li>
+  <li><strong>High-Resolution PDF Export</strong>: Instant client-side print and PDF generation preserving custom color themes.</li>
+</ul>
+
+<h2>Technical Specification</h2>
+<ul>
+  <li><strong>Frontend Architecture</strong>: Next.js 15, React Hook Form, Zod, `dnd-kit`, Tailwind CSS, shadcn/ui.</li>
+  <li><strong>AI Integration</strong>: Google Gemini AI SDK via server actions and streaming endpoints.</li>
+  <li><strong>Database &amp; Storage</strong>: PostgreSQL, Prisma ORM, and Vercel Blob object storage.</li>
+  <li><strong>Payments &amp; Auth</strong>: Stripe Checkout + Customer Portal webhooks and secure user authentication.</li>
+</ul>
+
+<h2>Engineering Challenges &amp; Solutions</h2>
+<p>
+  <strong>Zero-Lag Live Preview with Background Persistence</strong>: Updating a complex document preview on every keystroke while syncing to PostgreSQL can cause input lag or database write amplification. Implementing optimistic local state paired with a debounced dirty-field sync queue kept typing latency under 16ms while minimizing database writes.
+</p>

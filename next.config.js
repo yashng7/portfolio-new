@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
+  },
   async redirects() {
     return [
       {
@@ -19,3 +22,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+

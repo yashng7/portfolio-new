@@ -1,189 +1,40 @@
-import Image from "next/image"
-import { MDXRemote } from "next-mdx-remote/rsc"
-import rehypePrettyCode from "rehype-pretty-code"
-import rehypeSlug from "rehype-slug"
-import remarkGfm from "remark-gfm"
-import { visit } from "unist-util-visit"
+import * as React from "react"
 
 import { cn } from "@/lib/utils"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Callout } from "@/components/mdx/callout"
-import { CodeBlock } from "@/components/mdx/code-block"
-import { MdxCard } from "@/components/mdx/mdx-card"
-
-type ImageProps = React.ComponentProps<typeof Image>
-type AlertProps = React.ComponentProps<typeof Alert>
-type AlertTitleProps = React.ComponentProps<typeof AlertTitle>
-type AlertDescriptionProps = React.ComponentProps<typeof AlertDescription>
-type AspectRatioProps = React.ComponentProps<typeof AspectRatio>
-
-const components = {
-  h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className={cn("mt-2 scroll-m-20 text-4xl font-bold tracking-tight lg:text-5xl", className)} {...props} />
-  ),
-  h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      className={cn("mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0", className)}
-      {...props}
-    />
-  ),
-  h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className={cn("mt-8 scroll-m-20 text-2xl font-semibold tracking-tight", className)} {...props} />
-  ),
-  h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className={cn("mt-8 scroll-m-20 text-xl font-semibold tracking-tight", className)} {...props} />
-  ),
-  h5: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h5 className={cn("mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)} {...props} />
-  ),
-  h6: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h6 className={cn("mt-8 scroll-m-20 text-base font-semibold tracking-tight", className)} {...props} />
-  ),
-  a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
-    <a
-      className={cn("font-medium text-primary underline underline-offset-4 hover:text-primary/80", className)}
-      {...props}
-    />
-  ),
-  p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className={cn("text-base leading-7 [&:not(:first-child)]:mt-6", className)} {...props} />
-  ),
-  ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
-  ),
-  ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
-  ),
-  li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li className={cn("mt-2 text-base leading-7", className)} {...props} />
-  ),
-  blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <blockquote className={cn("mt-6 border-l-2 pl-6 italic text-muted-foreground", className)} {...props} />
-  ),
-  img: ({ className, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className={cn("rounded-md border", className)} alt={alt} {...props} />
-  ),
-  hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => <hr className="my-4 md:my-8" {...props} />,
-  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="w-full my-6 overflow-y-auto">
-      <table className={cn("w-full", className)} {...props} />
-    </div>
-  ),
-  tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className={cn("m-0 border-t p-0 even:bg-muted", className)} {...props} />
-  ),
-  th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th
-      className={cn(
-        "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <td
-      className={cn("border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right", className)}
-      {...props}
-    />
-  ),
-  pre: CodeBlock,
-  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <code className={cn("relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm", className)} {...props} />
-  ),
-  Image: ({ className, alt, ...props }: ImageProps) => (
-    <div className="w-full my-6 overflow-hidden rounded-lg">
-      <Image
-        className={cn("w-full", className)}
-        alt={alt}
-        {...props}
-        width={720}
-        height={480}
-        style={{
-          width: "100%",
-          height: "auto",
-        }}
-      />
-    </div>
-  ),
-  Alert: ({ className, ...props }: AlertProps) => <Alert className={cn("my-6", className)} {...props} />,
-  AlertTitle: ({ className, ...props }: AlertTitleProps) => (
-    <AlertTitle className={cn("mt-4 font-semibold", className)} {...props} />
-  ),
-  AlertDescription: ({ className, ...props }: AlertDescriptionProps) => (
-    <AlertDescription className={cn("mt-1 text-sm [&>p]:leading-relaxed", className)} {...props} />
-  ),
-  AspectRatio: ({ className, ...props }: AspectRatioProps) => (
-    <AspectRatio className={cn("my-6", className)} {...props} />
-  ),
-  Card: MdxCard,
-  Callout,
-}
-
-const mdxOptions = {
-  remarkPlugins: [remarkGfm],
-  rehypePlugins: [
-    rehypeSlug,
-    () => (tree: any) => {
-      visit(tree, (node: any) => {
-        if (node?.type === "element" && node?.tagName === "pre") {
-          const [codeEl] = node.children;
-          if (codeEl?.tagName !== "code") return;
-          node.raw = codeEl.children?.[0]?.value;
-        }
-      });
-    },
-    [
-      rehypePrettyCode,
-      {
-        theme: { dark: "one-dark-pro", light: "github-light" },
-        onVisitLine(node: any) {
-          if (node.children.length === 0) {
-            node.children = [{ type: "text", value: " " }];
-          }
-        },
-        onVisitHighlightedLine(node: any) {
-          node.properties.className.push("line--highlighted");
-        },
-        onVisitHighlightedWord(node: any) {
-          node.properties.className = ["word--highlighted"];
-        },
-      },
-    ],
-    () => (tree: any) => {
-      visit(tree, (node: any) => {
-        if (node?.type === "element" && node?.tagName === "div") {
-          if (!("data-rehype-pretty-code-fragment" in node.properties))
-            return;
-
-          for (const child of node.children) {
-            if (child.tagName === "pre") {
-              child.properties["raw"] = node.raw;
-            }
-          }
-        }
-      });
-    },
-  ],
-}
 
 interface MdxProps {
   source?: string
   code?: string
+  className?: string
 }
 
-export function Mdx({ source, code }: MdxProps) {
-  const content = source ?? code ?? ""
+/**
+ * Zero-Library Native HTML Renderer
+ * Renders pre-authored semantic .html content directly in the browser with zero AST/MDX runtime overhead.
+ */
+export function Mdx({ source, code, className }: MdxProps) {
+  const html = source ?? code ?? ""
 
   return (
-    <div className="prose mdx prose-slate dark:prose-invert max-w-none">
-      <MDXRemote
-        source={content}
-        components={components}
-        options={{ mdxOptions: mdxOptions as any }}
-      />
-    </div>
+    <div
+      className={cn(
+        "prose mdx prose-neutral dark:prose-invert max-w-none",
+        "prose-headings:scroll-m-20 prose-headings:tracking-tight prose-headings:font-semibold prose-headings:text-neutral-950 dark:prose-headings:text-neutral-50",
+        "prose-h1:text-3xl sm:prose-h1:text-4xl prose-h1:font-bold",
+        "prose-h2:mt-10 prose-h2:border-b prose-h2:border-neutral-200/80 dark:prose-h2:border-neutral-800/80 prose-h2:pb-2 prose-h2:text-2xl first:prose-h2:mt-0",
+        "prose-h3:mt-8 prose-h3:text-xl",
+        "prose-p:text-base prose-p:leading-7 prose-p:text-neutral-700 dark:prose-p:text-neutral-300",
+        "prose-li:text-base prose-li:leading-7 prose-li:text-neutral-700 dark:prose-li:text-neutral-300",
+        "prose-strong:text-neutral-950 dark:prose-strong:text-neutral-100 prose-strong:font-semibold",
+        "prose-a:font-medium prose-a:text-orange-600 dark:prose-a:text-emerald-400 prose-a:underline prose-a:underline-offset-4 prose-a:decoration-orange-500/40 dark:prose-a:decoration-emerald-500/40 hover:prose-a:decoration-orange-600 dark:hover:prose-a:decoration-emerald-400",
+        "prose-hr:my-6 md:prose-hr:my-8 prose-hr:border-neutral-200/80 dark:prose-hr:border-neutral-800/80",
+        "prose-blockquote:border-l-2 prose-blockquote:border-orange-500 dark:prose-blockquote:border-emerald-500 prose-blockquote:pl-6 prose-blockquote:italic",
+        "prose-code:rounded prose-code:bg-neutral-100 dark:prose-code:bg-neutral-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-sm",
+        className
+      )}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   )
 }
+
+

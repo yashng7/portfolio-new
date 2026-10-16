@@ -1,32 +1,42 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import Footer from "@/components/site-footer";
 import Navbar from "@/components/site-nav";
+import { EmailInterceptor } from "@/components/email-interceptor";
 import { Analytics } from "@/components/analytics";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const fontMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Yashwant Gawande - Full Stack Developer Portfolio",
+    default: "Yashwant Gawande — Software Engineer & Full-Stack Systems",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.seoKeywords,
   authors: [
     {
-      name: "YashwantGawande",
+      name: "Yashwant Gawande",
       url: "https://github.com/yashng7",
     },
   ],
-  creator: "YashwantGawande",
+  creator: "Yashwant Gawande",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#07080a" },
   ],
   openGraph: {
     type: "website",
@@ -77,19 +87,26 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body
+        className={cn(
+          "min-h-screen font-sans antialiased bg-background text-foreground selection:bg-emerald-500/20",
+          fontSans.variable,
+          fontMono.variable
+        )}
+      >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
-          <div className="flex flex-col justify-between min-h-screen">
+          <div className="relative flex flex-col justify-between min-h-screen bg-telemetry-grid">
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>
+        <EmailInterceptor />
         <Analytics />
       </body>
     </html>
