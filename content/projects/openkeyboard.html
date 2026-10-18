@@ -1,0 +1,71 @@
+---
+title: OpenKeyboard
+description: A browser-based WebHID control panel for mechanical and Hall-effect gaming keyboards — per-key actuation tuning, Rapid Trigger, SOCD/Snap Tap, multi-layer remapping, RGB and macros without brand bloatware.
+image: "/images/projects/openkeyboard.png"
+date: "2026-10-18"
+link: "https://openkeyboard.by.yashwantgawande.com"
+github: "https://github.com/yashng7/openkeyboard"
+authors:
+  - yashng7
+---
+
+<h2>System Summary</h2>
+<p>
+  <strong>OpenKeyboard</strong> is a browser-native WebHID control panel for supported mechanical and Hall-effect (magnetic) gaming keyboards. It tunes per-key actuation (<code>0.1mm–4.0mm</code>), Rapid Trigger, SOCD / Snap Tap, multi-layer keymaps, per-key RGB, macros, and smart profiles—without installing vendor bloatware.
+</p>
+
+<h2>Architectural Overview</h2>
+<p>
+  Inspired by the OpenMouse-Project, OpenKeyboard replaces heavyweight desktop configuration suites with a single web app built on the WebHID API. It pairs a live hardware connection layer with a fully interactive virtual simulator, separating <em>staging</em> from <em>writing</em> so profiles can be edited and persisted locally before ever touching the board.
+</p>
+
+<h2>Core Subsystems &amp; Capabilities</h2>
+
+<h3>01 // WebHID Engine &amp; Virtual Hardware Simulator</h3>
+<ul>
+  <li><strong>Native WebHID Connectivity</strong>: Connects supported USB and 2.4GHz boards via <code>navigator.hid</code> across Wooting, Keychron HE/QMK, Wuque Studio, NuPhy, MonsGeek/Akko, DrunkDeer, Razer, and generic VIA/QMK devices.</li>
+  <li><strong>Virtual Hardware Simulator</strong>: Five switchable simulated boards with a live 32-byte HID frame inspector for developing and demoing without physical hardware.</li>
+  <li><strong>Physical Device Grouping</strong>: Groups the per-interface <code>HIDDevice</code> objects Chrome exposes into logical keyboards and targets only the vendor / VIA raw-HID collection.</li>
+  <li><strong>VIA Handshake Probing</strong>: Confirms a board is present via <code>id_get_protocol_version</code>, reading back protocol, firmware, and layer count.</li>
+</ul>
+
+<h3>02 // Visual Keymap &amp; Multi-Layer Remapper</h3>
+<ul>
+  <li><strong>Physical Geometry Switchers</strong>: Layouts for <code>60%</code>, <code>65%</code>, <code>75%</code>, <code>TKL (80%)</code>, and <code>Full-Size (100%)</code>.</li>
+  <li><strong>Four Hardware Layers</strong>: Base plus Fn1/Fn2/Fn3 layer editing with Hyper/Meh/Mod-Tap keys.</li>
+  <li><strong>Live Key Capture</strong>: Real-time physical key-press capture for fast binding reassignment.</li>
+</ul>
+
+<h3>03 // Magnetic Tuning &amp; SOCD (Snap Tap)</h3>
+<ul>
+  <li><strong>Per-Key Actuation</strong>: Continuous actuation point adjustment from <code>0.10mm</code> to <code>4.00mm</code>.</li>
+  <li><strong>Rapid Trigger Controls</strong>: Press/release sensitivity (<code>0.05mm–2.00mm</code>), Continuous Rapid Trigger, and Top/Bottom deadzones.</li>
+  <li><strong>SOCD / Snap Tap Manager</strong>: Counter-strafe pair configuration with a live A+D tester and real-time ADC Stem Travel Gauge.</li>
+</ul>
+
+<h3>04 // RGB Lighting Studio &amp; Macro / Diagnostics Suite</h3>
+<ul>
+  <li><strong>Lighting Studio</strong>: Nine matrix effects, PWM brightness/speed controls, chassis underglow sync, and an interactive per-key RGB brush painter.</li>
+  <li><strong>Macro Studio</strong>: Eight on-board macro slots (<code>M1–M8</code>) with a live keystroke timestamp recorder.</li>
+  <li><strong>Hardware Diagnostics</strong>: NKRO Rollover Matrix tester and Switch Chatter / Double-Bounce Analyzer with <code>ms</code> delta tracking.</li>
+  <li><strong>Switch Acoustics Synthesizer</strong>: Web Audio API sound modelling for Lekker HE, Gateron Oil King Thock, Holy Panda, and Box Jade Clicky profiles.</li>
+</ul>
+
+<h3>05 // Smart Profile Advisor</h3>
+<ul>
+  <li><strong>Server-Side Advisor API</strong>: A Next.js route (<code>/api/jev-advisor</code>) auto-calibrates actuation, Rapid Trigger, SOCD, and polling rate for any game or workflow.</li>
+</ul>
+
+<h2>Technical Specification</h2>
+<ul>
+  <li><strong>Framework</strong>: Next.js App Router with strict TypeScript end-to-end.</li>
+  <li><strong>Hardware Protocol</strong>: VIA raw-HID over WebHID — 32-byte reports via <code>sendReport(0, …)</code> with command echo in byte 0.</li>
+  <li><strong>State &amp; Persistence</strong>: Workspace staging mirrored to <code>localStorage</code>; explicit "Write to Board" gated behind a successful VIA handshake.</li>
+  <li><strong>Design System</strong>: OpenMouse Material Design 3 (M3) five-theme token system — Dark, Light, Ocean, NieR, and Catppuccin.</li>
+  <li><strong>Deployment</strong>: Vercel-hosted Next.js with a serverless advisor API route.</li>
+</ul>
+
+<h2>Engineering Challenges &amp; Solutions</h2>
+<p>
+  <strong>Honest Hardware Writes with Unreliable Device Metadata</strong>: WebHID exposes no "enumerate all devices" API, and VIA keycode writes require matrix row/column coordinates from a board definition that is no longer publicly hosted. Rather than guess and risk remapping the wrong physical key, OpenKeyboard stages edits safely, verifies writes with a read-back, and reports boards exposing no vendor interface as <em>read-only</em> instead of pretending settings were applied. When no writable board is connected the action reads <strong>Save to Browser</strong>, and the app never claims a hardware write.
+</p>
